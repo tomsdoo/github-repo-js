@@ -25,5 +25,8 @@ export function readyGitHubRepository(token: string) {
     async getIssue(issueNumber: number) {
       return await new GitHubIssue(this.owner, this.repo, issueNumber).get();
     }
+    async patchIssue(issueNumber: number, ...params: Parameters<typeof GitHubIssue["prototype"]["patch"]>) {
+      return await new GitHubIssue(this.owner, this.repo, issueNumber).patch(...params);
+    }
   };
 }
