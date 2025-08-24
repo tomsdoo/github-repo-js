@@ -72,6 +72,15 @@ export class GitHubApiBase<Item, ApiRequestBody> {
     }).then(r => r.json());
     return item;
   }
+  async delete() {
+    const response = await fetch(this.apiEndpoint, {
+      method: "DELETE",
+      headers: this.requestHeaders,
+    });
+    if (response.status < 200 || response.status >= 300) {
+      throw new Error(`request failed DELETE {this.apiEndpoint}`, { cause: response });
+    }
+  }
 }
 
 export class GitHubRepoApiBase<Item, ApiRequestBody> extends GitHubApiBase<Item, ApiRequestBody> {
