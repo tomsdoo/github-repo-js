@@ -3,11 +3,13 @@ import { readyGitHubIssue } from "@/modules/issue";
 import { readyGitHubRepositoryBranch } from "@/modules/repository-branch";
 import { readyGitHubRepositoryBranches } from "@/modules/repository-branches";
 import { readyGitHubRepositoryIssues } from "@/modules/repository-issues";
+import { readyGitHubReference } from "@/modules/reference";
 import { readyGitHubRepositoryReferences } from "@/modules/repository-references";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubRepository(token: string) {
   const GitHubIssue = readyGitHubIssue(token);
+  const GitHubReference = readyGitHubReference(token);
   const GitHubRepositoryIssues = readyGitHubRepositoryIssues(token);
   const GitHubRepositoryBranch = readyGitHubRepositoryBranch(token);
   const GitHubRepositoryBranches = readyGitHubRepositoryBranches(token);
@@ -36,6 +38,15 @@ export function readyGitHubRepository(token: string) {
     }
     async getTagReferences() {
       return await new GitHubRepositoryReferences(this.owner, this.repo).getMatchingList("tags/");
+    }
+    async getReference(ref: string) {
+      return await new GitHubReference(this.owner, this.repo, ref).get();
+    }
+    async getBranchReference(branchName: string) {
+      return await new GitHubReference(this.owner, this.repo, `heads/${branchName}`).get();
+    }
+    async getTagReference(tagName: string) {
+      return await new GitHubReference(this.owner, this.repo, `tags/${tagName}`).get();
     }
     async getIssues() {
       return await new GitHubRepositoryIssues(this.owner, this.repo).getList();
