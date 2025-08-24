@@ -1,4 +1,6 @@
 import { GitHubRepoApiBase } from "@/modules/base";
+import { readyGitHubBlob } from "@/modules/blob";
+import { readyGitHubBlobs } from "@/modules/blobs";
 import { readyGitHubIssue } from "@/modules/issue";
 import { readyGitHubRepositoryBranch } from "@/modules/repository-branch";
 import { readyGitHubRepositoryBranches } from "@/modules/repository-branches";
@@ -9,6 +11,8 @@ import { readyGitHubTree } from "@/modules/tree";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubRepository(token: string) {
+  const GitHubBlob = readyGitHubBlob(token);
+  const GitHubBlobs = readyGitHubBlobs(token);
   const GitHubIssue = readyGitHubIssue(token);
   const GitHubReference = readyGitHubReference(token);
   const GitHubRepositoryIssues = readyGitHubRepositoryIssues(token);
@@ -55,6 +59,12 @@ export function readyGitHubRepository(token: string) {
     }
     async deleteReference(ref: string) {
       return await new GitHubReference(this.owner, this.repo, ref).delete();
+    }
+    async getBlob(fileSha: string) {
+      return await new GitHubBlob(this.owner, this.repo, fileSha).get();
+    }
+    async postBlob(...params: Parameters<typeof GitHubBlobs["prototype"]["post"]>) {
+      return await new GitHubBlobs(this.owner, this.repo).post(...params);
     }
     async getTree(sha: string) {
       return await new GitHubTree(this.owner, this.repo, sha).get();
