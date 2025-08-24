@@ -48,6 +48,9 @@ export function readyGitHubRepository(token: string) {
     async getTagReference(tagName: string) {
       return await new GitHubReference(this.owner, this.repo, `tags/${tagName}`).get();
     }
+    async patchReference(ref: string, ...params: Parameters<typeof GitHubReference["prototype"]["patch"]>) {
+      return await new GitHubReference(this.owner, this.repo, ref).patch(...params);
+    }
     async getIssues() {
       return await new GitHubRepositoryIssues(this.owner, this.repo).getList();
     }
