@@ -5,6 +5,7 @@ import { readyGitHubRepositoryBranches } from "@/modules/repository-branches";
 import { readyGitHubRepositoryIssues } from "@/modules/repository-issues";
 import { readyGitHubReference } from "@/modules/reference";
 import { readyGitHubRepositoryReferences } from "@/modules/repository-references";
+import { readyGitHubTree } from "@/modules/tree";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubRepository(token: string) {
@@ -14,6 +15,7 @@ export function readyGitHubRepository(token: string) {
   const GitHubRepositoryBranch = readyGitHubRepositoryBranch(token);
   const GitHubRepositoryBranches = readyGitHubRepositoryBranches(token);
   const GitHubRepositoryReferences = readyGitHubRepositoryReferences(token);
+  const GitHubTree = readyGitHubTree(token);
   return class extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"],
     Endpoints["PATCH /repos/{owner}/{repo}"]["request"]["data"]
@@ -53,6 +55,9 @@ export function readyGitHubRepository(token: string) {
     }
     async deleteReference(ref: string) {
       return await new GitHubReference(this.owner, this.repo, ref).delete();
+    }
+    async getTree(sha: string) {
+      return await new GitHubTree(this.owner, this.repo, sha).get();
     }
     async getIssues() {
       return await new GitHubRepositoryIssues(this.owner, this.repo).getList();
