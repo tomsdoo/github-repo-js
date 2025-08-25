@@ -7,6 +7,7 @@ import { readyGitHubRepositoryBranches } from "@/modules/repository-branches";
 import { readyGitHubRepositoryIssues } from "@/modules/repository-issues";
 import { readyGitHubReference } from "@/modules/reference";
 import { readyGitHubRepositoryReferences } from "@/modules/repository-references";
+import { readyGitHubRepositoryReleases } from "@/modules/repository-releases";
 import { readyGitHubTree } from "@/modules/tree";
 import type { Endpoints } from "@octokit/types";
 
@@ -19,6 +20,7 @@ export function readyGitHubRepository(token: string) {
   const GitHubRepositoryBranch = readyGitHubRepositoryBranch(token);
   const GitHubRepositoryBranches = readyGitHubRepositoryBranches(token);
   const GitHubRepositoryReferences = readyGitHubRepositoryReferences(token);
+  const GitHubRepositoryReleases = readyGitHubRepositoryReleases(token);
   const GitHubTree = readyGitHubTree(token);
   return class extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"],
@@ -83,6 +85,12 @@ export function readyGitHubRepository(token: string) {
     }
     async patchIssue(issueNumber: number, ...params: Parameters<typeof GitHubIssue["prototype"]["patch"]>) {
       return await new GitHubIssue(this.owner, this.repo, issueNumber).patch(...params);
+    }
+    async getReleases() {
+      return await new GitHubRepositoryReleases(this.owner, this.repo).getList();
+    }
+    async postRelease(...params: Parameters<typeof GitHubRepositoryReleases["prototype"]["post"]>) {
+      return await new GitHubRepositoryReleases(this.owner, this.repo).post(...params);
     }
   };
 }
