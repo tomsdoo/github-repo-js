@@ -36,7 +36,13 @@ export class GitHubApiBase<Item, ApiRequestBody> {
       }
       const resultItems: Item[] = await fetch(url, {
         headers: this.requestHeaders,
-      }).then(r => r.json());
+        cache: "no-store",
+      }).then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText, { cause: { response }});
+        }
+        return response.json();
+      });
       return { resultItems };
     }, this.pageSizeForRequest);
   }
@@ -47,13 +53,25 @@ export class GitHubApiBase<Item, ApiRequestBody> {
     }
     const items: Item[] = await fetch(url, {
       headers: this.requestHeaders,
-    }).then(r => r.json());
+        cache: "no-store",
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText, { cause: { response }});
+      }
+      return response.json();
+    });
     return items;
   }
   async get() {
     const item: Item = await fetch(this.apiEndpoint, {
       headers: this.requestHeaders,
-    }).then(r => r.json());
+      cache: "no-store",
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText, { cause: { response }});
+      }
+      return response.json();
+    });
     return item;
   }
   async post(body: ApiRequestBody) {
@@ -61,7 +79,12 @@ export class GitHubApiBase<Item, ApiRequestBody> {
       method: "POST",
       headers: this.requestHeaders,
       body: JSON.stringify(body),
-    }).then(r => r.json());
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText, { cause: { response }});
+      }
+      return response.json();
+    });
     return item;
   }
   async patch(body: ApiRequestBody) {
@@ -69,7 +92,12 @@ export class GitHubApiBase<Item, ApiRequestBody> {
       method: "PATCH",
       headers: this.requestHeaders,
       body: JSON.stringify(body),
-    }).then(r => r.json());
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error(response.statusText, { cause: { response }});
+      }
+      return response.json();
+    });
     return item;
   }
   async delete() {
@@ -77,8 +105,8 @@ export class GitHubApiBase<Item, ApiRequestBody> {
       method: "DELETE",
       headers: this.requestHeaders,
     });
-    if (response.status < 200 || response.status >= 300) {
-      throw new Error(`request failed DELETE {this.apiEndpoint}`, { cause: response });
+    if (!response.ok) {
+      throw new Error(response.statusText, { cause: { response }});
     }
   }
 }
@@ -98,5 +126,13 @@ export class GitHubIssueApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<
   constructor(token: string, owner: string, repo: string, issueNumber: number) {
     super(token, owner, repo);
     this.issueNumber = issueNumber;
+  }
+}
+
+export class GitHubPullApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<Item, ApiRequestBody> {
+  protected pullNumber: number;
+  constructor(token: string, owner: string, repo: string, pullNumber: number) {
+    super(token, owner, repo);
+    this.pullNumber = pullNumber;
   }
 }
