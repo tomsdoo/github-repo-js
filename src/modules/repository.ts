@@ -87,8 +87,8 @@ export function readyGitHubRepository(token: string) {
     async postTree(...params: Parameters<typeof GitHubRepositoryTrees["prototype"]["post"]>) {
       return await new GitHubRepositoryTrees(this.owner, this.repo).post(...params);
     }
-    async getIssues() {
-      return await new GitHubRepositoryIssues(this.owner, this.repo).getList();
+    async getIssues(query?: Record<string, string>) {
+      return await new GitHubRepositoryIssues(this.owner, this.repo).getList(query);
     }
     async postIssue(...params: Parameters<typeof GitHubRepositoryIssues["prototype"]["post"]>) {
       return await new GitHubRepositoryIssues(this.owner, this.repo).post(...params);
@@ -102,8 +102,8 @@ export function readyGitHubRepository(token: string) {
     async patchIssue(issueNumber: number, ...params: Parameters<typeof GitHubIssue["prototype"]["patch"]>) {
       return await new GitHubIssue(this.owner, this.repo, issueNumber).patch(...params);
     }
-    async getPulls() {
-      return await new GitHubRepositoryPulls(this.owner, this.repo).getList();
+    async getPulls(query?: Record<string, string>) {
+      return await new GitHubRepositoryPulls(this.owner, this.repo).getList(query);
     }
     async postPull(...params: Parameters<typeof GitHubRepositoryPulls["prototype"]["post"]>) {
       return await new GitHubRepositoryPulls(this.owner, this.repo).post(...params);
@@ -117,8 +117,8 @@ export function readyGitHubRepository(token: string) {
     async patchPull(pullNumber: number, ...params: Parameters<typeof GitHubRepositoryPull["prototype"]["post"]>) {
       return await new GitHubRepositoryPull(this.owner, this.repo, pullNumber).patch(...params);
     }
-    async getReleases() {
-      return await new GitHubRepositoryReleases(this.owner, this.repo).getList();
+    async getReleases(query?: Record<string, string>) {
+      return await new GitHubRepositoryReleases(this.owner, this.repo).getList(query);
     }
     async postRelease(...params: Parameters<typeof GitHubRepositoryReleases["prototype"]["post"]>) {
       return await new GitHubRepositoryReleases(this.owner, this.repo).post(...params);
