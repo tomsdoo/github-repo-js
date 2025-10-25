@@ -29,7 +29,6 @@
   "devDependencies": {
     "@octokit/types": "14.1.0",
     "@tsconfig/node24": "24.0.1",
-    "@types/node": "24.9.1",
     "tsup": "8.5.0",
     "tsx": "4.20.4",
     "typescript": "5.9.2"
