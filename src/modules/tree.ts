@@ -6,7 +6,7 @@ export function readyGitHubTree(token: string) {
     Endpoints["GET /repos/{owner}/{repo}/git/trees/{tree_sha}"]["response"]["data"],
     unknown
   > {
-    protected treeSha: string;
+    public treeSha: string;
     constructor(owner: string, repo: string, treeSha: string) {
       super(token, owner, repo);
       this.treeSha = treeSha;

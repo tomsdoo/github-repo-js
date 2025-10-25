@@ -6,7 +6,7 @@ export function readyGitHubReference(token: string) {
     Endpoints["GET /repos/{owner}/{repo}/git/ref/{ref}"]["response"]["data"],
     Endpoints["PATCH /repos/{owner}/{repo}/git/refs/{ref}"]["request"]["data"]
   > {
-    protected ref: string;
+    public ref: string;
     constructor(owner: string, repo: string, ref: string) {
       super(token, owner, repo);
       this.ref = ref;

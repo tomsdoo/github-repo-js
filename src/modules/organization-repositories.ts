@@ -6,7 +6,7 @@ export function readyGitHubOrganizationRepositories(token: string) {
     Endpoints["GET /orgs/{org}/repos"]["response"]["data"] extends (infer T)[] ? T : never,
     Endpoints["POST /orgs/{org}/repos"]["request"]["data"]
   > {
-    protected org: string;
+    public org: string;
     constructor(org: string) {
       super(token);
       this.org = org;

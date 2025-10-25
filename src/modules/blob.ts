@@ -6,7 +6,7 @@ export function readyGitHubBlob(token: string) {
     Endpoints["GET /repos/{owner}/{repo}/git/blobs/{file_sha}"]["response"]["data"],
     Endpoints["POST /repos/{owner}/{repo}/git/blobs"]["request"]["data"]
   > {
-    protected fileSha: string;
+    public fileSha: string;
     constructor(owner: string, repo: string, fileSha: string) {
       super(token, owner, repo);
       this.fileSha = fileSha;

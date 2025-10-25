@@ -6,7 +6,7 @@ export function readyGitHubRepositoryBranch(token: string) {
     Endpoints["GET /repos/{owner}/{repo}/branches/{branch}"]["response"]["data"],
     unknown
   > {
-    protected branch: string;
+    public branch: string;
     constructor(owner: string, repo: string, branch: string) {
       super(token, owner, repo);
       this.branch = branch;
