@@ -3,7 +3,7 @@ import { loopPages } from "@/utils";
 const GITHUB_API_ORIGIN = "https://api.github.com";
 
 export class GitHubApiBase<Item, ApiRequestBody> {
-  protected token: string;
+  public token: string;
   constructor(token: string) {
     this.token = token;
   }
@@ -112,8 +112,8 @@ export class GitHubApiBase<Item, ApiRequestBody> {
 }
 
 export class GitHubRepoApiBase<Item, ApiRequestBody> extends GitHubApiBase<Item, ApiRequestBody> {
-  protected owner: string;
-  protected repo: string;
+  public owner: string;
+  public repo: string;
   constructor(token: string, owner: string, repo: string) {
     super(token);
     this.owner = owner;
@@ -122,7 +122,7 @@ export class GitHubRepoApiBase<Item, ApiRequestBody> extends GitHubApiBase<Item,
 }
 
 export class GitHubIssueApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<Item, ApiRequestBody> {
-  protected issueNumber: number;
+  public issueNumber: number;
   constructor(token: string, owner: string, repo: string, issueNumber: number) {
     super(token, owner, repo);
     this.issueNumber = issueNumber;
@@ -130,7 +130,7 @@ export class GitHubIssueApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<
 }
 
 export class GitHubPullApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<Item, ApiRequestBody> {
-  protected pullNumber: number;
+  public pullNumber: number;
   constructor(token: string, owner: string, repo: string, pullNumber: number) {
     super(token, owner, repo);
     this.pullNumber = pullNumber;

@@ -6,7 +6,7 @@ export function readyGitHubRepositoryReferences(token: string) {
     Endpoints["GET /repos/{owner}/{repo}/git/matching-refs/{ref}"]["response"]["data"] extends (infer T)[] ? T : never,
     unknown
   > {
-    protected refName: string;
+    public refName: string;
     constructor(owner: string, repo: string, refName: string) {
       super(token, owner, repo);
       this.refName = refName;

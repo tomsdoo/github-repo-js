@@ -4,7 +4,7 @@ export default defineConfig({
   entry: ["src/index.ts"],
   globalName: "GitHubRepoJs",
   clean: true,
-  dts: false,
+  dts: true,
   splitting: false,
   minify: true,
   format: ["esm", "iife"],
