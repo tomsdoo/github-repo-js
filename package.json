@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "tsup",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "tomsdoo",
@@ -29,8 +29,10 @@
   "devDependencies": {
     "@octokit/types": "14.1.0",
     "@tsconfig/node24": "24.0.1",
+    "@types/node": "24.9.1",
     "tsup": "8.5.0",
     "tsx": "4.20.4",
-    "typescript": "5.9.2"
+    "typescript": "5.9.2",
+    "vitest": "4.0.3"
   }
 }
