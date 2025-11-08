@@ -2,14 +2,19 @@
   "name": "github-repo-js",
   "version": "0.0.1",
   "type": "module",
-  "main": "dist/index.global.js",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "browser": "./dist/index.global.js",
       "import": "./dist/index.js"
+    },
+    "./facade": {
+      "types": "./dist/index.d.ts",
+      "import": "./dst/index.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "test": "vitest"
