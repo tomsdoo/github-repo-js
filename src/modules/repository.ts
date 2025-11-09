@@ -2,6 +2,8 @@ import { GitHubRepoApiBase } from "@/modules/base";
 import { readyGitHubBlob } from "@/modules/blob";
 import { readyGitHubBlobs } from "@/modules/blobs";
 import { readyGitHubIssue } from "@/modules/issue";
+import { readyGitHubRepositoryArtifacts } from "@/modules/repository-artifacts";
+import { readyGitHubRepositoryArtifact } from "@/modules/repository-artifact";
 import { readyGitHubRepositoryBranch } from "@/modules/repository-branch";
 import { readyGitHubRepositoryBranches } from "@/modules/repository-branches";
 import { readyGitHubRepositoryCommits } from "@/modules/repository-commits";
@@ -22,6 +24,8 @@ export function readyGitHubRepository(token: string) {
   const GitHubIssue = readyGitHubIssue(token);
   const GitHubReference = readyGitHubReference(token);
   const GitHubReferenceForGet = readyGitHubReferenceForGet(token);
+  const GitHubRepositoryArtifacts = readyGitHubRepositoryArtifacts(token);
+  const GitHubRepositoryArtifact = readyGitHubRepositoryArtifact(token);
   const GitHubRepositoryIssues = readyGitHubRepositoryIssues(token);
   const GitHubRepositoryBranch = readyGitHubRepositoryBranch(token);
   const GitHubRepositoryBranches = readyGitHubRepositoryBranches(token);
@@ -41,6 +45,15 @@ export function readyGitHubRepository(token: string) {
     }
     get apiEndpoint() {
       return `${this.apiOrigin}/repos/${this.owner}/${this.repo}`;
+    }
+    async getArtifacts(query?: {name: string }) {
+      return await new GitHubRepositoryArtifacts(this.owner, this.repo).getList(query);
+    }
+    async getArtifact(artifactId: number) {
+      return await new GitHubRepositoryArtifact(this.owner, this.repo, artifactId).get();
+    }
+    async getArtifactZipBlob(artifactId: number) {
+      return await new GitHubRepositoryArtifact(this.owner, this.repo, artifactId).downloadBlob();
     }
     async getBranches() {
       return await new GitHubRepositoryBranches(this.owner, this.repo).getList();
