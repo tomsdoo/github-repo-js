@@ -14,6 +14,7 @@ import { readyGitHubRepositoryPull } from "@/modules/repository-pull";
 import { readyGitHubRepositoryPulls } from "@/modules/repository-pulls";
 import { readyGitHubRepositoryReferences } from "@/modules/repository-references";
 import { readyGitHubRepositoryReleases } from "@/modules/repository-releases";
+import { readyGitHubRepositoryRuns } from "@/modules/repository-runs";
 import { readyGitHubTree } from "@/modules/tree";
 import { readyGitHubRepositoryTrees } from "@/modules/repository-trees";
 import type { Endpoints } from "@octokit/types";
@@ -34,6 +35,7 @@ export function readyGitHubRepository(token: string) {
   const GitHubRepositoryPulls = readyGitHubRepositoryPulls(token);
   const GitHubRepositoryReferences = readyGitHubRepositoryReferences(token);
   const GitHubRepositoryReleases = readyGitHubRepositoryReleases(token);
+  const GitHubRepositoryRuns = readyGitHubRepositoryRuns(token);
   const GitHubRepositoryTrees = readyGitHubRepositoryTrees(token);
   const GitHubTree = readyGitHubTree(token);
   return class extends GitHubRepoApiBase<
@@ -138,6 +140,9 @@ export function readyGitHubRepository(token: string) {
     }
     async postCommit(...params: Parameters<typeof GitHubRepositoryCommits["prototype"]["post"]>) {
       return await new GitHubRepositoryCommits(this.owner, this.repo).post(...params);
+    }
+    async getRuns(query?: Record<string, string | number>) {
+      return await new GitHubRepositoryRuns(this.owner, this.repo).getList(query);
     }
   };
 }
