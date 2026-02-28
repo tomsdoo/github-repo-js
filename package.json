@@ -33,11 +33,11 @@
   "description": "",
   "devDependencies": {
     "@octokit/types": "16.0.0",
-    "@tsconfig/node24": "24.0.1",
+    "@tsconfig/node24": "24.0.4",
     "@types/node": "25.3.2",
-    "tsup": "8.5.0",
-    "tsx": "4.20.4",
-    "typescript": "5.9.2",
-    "vitest": "4.0.3"
+    "tsup": "8.5.1",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "vitest": "4.0.18"
   }
 }
