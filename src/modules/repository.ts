@@ -14,6 +14,7 @@ import { readyGitHubRepositoryPull } from "@/modules/repository-pull";
 import { readyGitHubRepositoryPulls } from "@/modules/repository-pulls";
 import { readyGitHubRepositoryReferences } from "@/modules/repository-references";
 import { readyGitHubRepositoryReleases } from "@/modules/repository-releases";
+import { readyGitHubRepositoryLatestRelease } from "@/modules/repository-latest-release";
 import { readyGitHubRepositoryRuns } from "@/modules/repository-runs";
 import { readyGitHubTree } from "@/modules/tree";
 import { readyGitHubRepositoryTrees } from "@/modules/repository-trees";
@@ -35,6 +36,7 @@ export function readyGitHubRepository(token: string) {
   const GitHubRepositoryPulls = readyGitHubRepositoryPulls(token);
   const GitHubRepositoryReferences = readyGitHubRepositoryReferences(token);
   const GitHubRepositoryReleases = readyGitHubRepositoryReleases(token);
+  const GitHubRepositoryLatestRelease = readyGitHubRepositoryLatestRelease(token);
   const GitHubRepositoryRuns = readyGitHubRepositoryRuns(token);
   const GitHubRepositoryTrees = readyGitHubRepositoryTrees(token);
   const GitHubTree = readyGitHubTree(token);
@@ -137,6 +139,9 @@ export function readyGitHubRepository(token: string) {
     }
     async postRelease(...params: Parameters<typeof GitHubRepositoryReleases["prototype"]["post"]>) {
       return await new GitHubRepositoryReleases(this.owner, this.repo).post(...params);
+    }
+    async getLatestRelease() {
+      return await new GitHubRepositoryLatestRelease(this.owner, this.repo).get();
     }
     async postCommit(...params: Parameters<typeof GitHubRepositoryCommits["prototype"]["post"]>) {
       return await new GitHubRepositoryCommits(this.owner, this.repo).post(...params);
