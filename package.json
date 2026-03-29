@@ -1,5 +1,5 @@
 {
-  "name": "github-repo-js",
+  "name": "@tomsd/github-repo-js",
   "version": "0.2.1",
   "type": "module",
   "exports": {
@@ -9,7 +9,7 @@
     },
     "./facade": {
       "types": "./dist/index.d.ts",
-      "import": "./dst/index.js"
+      "import": "./dist/index.js"
     }
   },
   "files": [
