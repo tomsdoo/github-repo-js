@@ -8,6 +8,7 @@ export default defineConfig([
     dts: true,
     splitting: false,
     minify: true,
+    keepNames: true,
     format: ["esm", "iife"],
     outDir: "dist",
   },
@@ -17,6 +18,7 @@ export default defineConfig([
     dts: false,
     splitting: false,
     minify: true,
+    keepNames: true,
     format: ["esm"],
     outDir: "dist",
   }
