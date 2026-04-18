@@ -10,4 +10,4 @@ RUN npm run build
 RUN cp -r /usr/local/building-app/dist /usr/local/app
 WORKDIR /usr/local/app
 RUN rm -rf /usr/local/building-app
-ENTRYPOINT ["node", "repl.js"]
+ENTRYPOINT ["node", "repl.mjs"]
