@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown",
     "test": "vitest"
   },
   "keywords": [],
@@ -35,7 +35,7 @@
     "@octokit/types": "16.0.0",
     "@tsconfig/node24": "24.0.4",
     "@types/node": "25.6.0",
-    "tsup": "8.5.1",
+    "tsdown": "0.21.9",
     "tsx": "4.21.0",
     "typescript": "6.0.2",
     "vitest": "4.1.4"
