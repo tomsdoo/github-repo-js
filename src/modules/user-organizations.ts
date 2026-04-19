@@ -2,7 +2,7 @@ import { GitHubApiBase } from "@/modules/base";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubUserOrganizations(token: string) {
-  return class extends GitHubApiBase<
+  return class GitHubUserOrganizations extends GitHubApiBase<
     Endpoints["GET /user/orgs"]["response"]["data"] extends (infer T)[] ? T : never,
     {}
   > {

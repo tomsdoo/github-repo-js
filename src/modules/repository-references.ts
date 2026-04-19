@@ -15,7 +15,7 @@ export function readyGitHubRepositoryReferences(token: string) {
       return `${this.apiOrigin}/repos/${this.owner}/${this.repo}/git/matching-refs/${this.refName}`;
     }
   }
-  return class extends GitHubRepoApiBase<
+  return class GitHubRepositoryReferences extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}/git/matching-refs/{ref}"]["response"]["data"] extends (infer T)[] ? T : never,
     Endpoints["POST /repos/{owner}/{repo}/git/refs"]["request"]["data"]
   > {

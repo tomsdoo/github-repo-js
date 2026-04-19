@@ -5,7 +5,7 @@ import type { Endpoints } from "@octokit/types";
 type RepositoryRun = Endpoints["GET /repos/{owner}/{repo}/actions/runs"]["response"]["data"]["workflow_runs"] extends (infer T)[] ? T : never;
 
 export function readyGitHubRepositoryRuns(token: string) {
-  return class extends GitHubRepoApiBase<
+  return class GitHubRepositoryRuns extends GitHubRepoApiBase<
     RepositoryRun,
     unknown
   > {

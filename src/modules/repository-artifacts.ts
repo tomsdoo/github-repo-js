@@ -5,7 +5,7 @@ import type { Endpoints } from "@octokit/types";
 type Artifact = Endpoints["GET /repos/{owner}/{repo}/actions/artifacts"]["response"]["data"]["artifacts"] extends (infer T)[] ? T : never;
 
 export function readyGitHubRepositoryArtifacts(token: string) {
-  return class extends GitHubRepoApiBase<
+  return class GitHubRepositoryArtifacts extends GitHubRepoApiBase<
     Artifact,
     unknown
   > {

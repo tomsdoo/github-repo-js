@@ -4,7 +4,7 @@ import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubIssue(token: string) {
   const GitHubIssueComments = readyGitHubIssueComments(token);
-  return class extends GitHubIssueApiBase<
+  return class GitHubIssue extends GitHubIssueApiBase<
     Endpoints["GET /repos/{owner}/{repo}/issues/{issue_number}"]["response"]["data"],
     Endpoints["PATCH /repos/{owner}/{repo}/issues/{issue_number}"]["request"]["data"]
   > {

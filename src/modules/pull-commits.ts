@@ -2,7 +2,7 @@ import { GitHubPullApiBase } from "@/modules/base";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubPullCommits(token: string) {
-  return class extends GitHubPullApiBase<
+  return class GitHubPullCommits extends GitHubPullApiBase<
     Endpoints["GET /repos/{owner}/{repo}/pulls/{pull_number}/commits"]["response"]["data"] extends (infer T)[] ? T : never,
     unknown
   > {

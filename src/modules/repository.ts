@@ -40,7 +40,7 @@ export function readyGitHubRepository(token: string) {
   const GitHubRepositoryRuns = readyGitHubRepositoryRuns(token);
   const GitHubRepositoryTrees = readyGitHubRepositoryTrees(token);
   const GitHubTree = readyGitHubTree(token);
-  return class extends GitHubRepoApiBase<
+  return class GitHubRepository extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"],
     Endpoints["PATCH /repos/{owner}/{repo}"]["request"]["data"]
   > {

@@ -2,7 +2,7 @@ import { GitHubRepoApiBase } from "@/modules/base";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubRepositoryBranch(token: string) {
-  return class extends GitHubRepoApiBase<
+  return class GitHubRepositoryBranch extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}/branches/{branch}"]["response"]["data"],
     unknown
   > {

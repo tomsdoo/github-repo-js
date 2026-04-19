@@ -6,7 +6,7 @@ import type { Endpoints } from "@octokit/types";
 export function readyGitHubRepositoryPull(token:string) {
   const GitHubPullCommits = readyGitHubPullCommits(token);
   const GitHubPullReviewers = readyGitHubPullReviewers(token);
-  return class extends GitHubPullApiBase<
+  return class GitHubRepositoryPull extends GitHubPullApiBase<
     Endpoints["GET /repos/{owner}/{repo}/pulls/{pull_number}"]["response"]["data"],
     Endpoints["PATCH /repos/{owner}/{repo}/pulls/{pull_number}"]["request"]["data"]
   > {

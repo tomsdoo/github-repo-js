@@ -2,7 +2,7 @@ import { GitHubRepoApiBase } from "@/modules/base";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubTree(token: string) {
-  return class extends GitHubRepoApiBase<
+  return class GitHubTree extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}/git/trees/{tree_sha}"]["response"]["data"],
     unknown
   > {

@@ -16,7 +16,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsdown && tsc -p tsconfig.types.json",
+    "build": "tsdown && tsc -p tsconfig.types.json && tsc-alias -p tsconfig.types.json",
     "test": "vitest"
   },
   "keywords": [],
@@ -35,6 +35,7 @@
     "@octokit/types": "16.0.0",
     "@tsconfig/node24": "24.0.4",
     "@types/node": "25.6.0",
+    "tsc-alias": "1.8.16",
     "tsdown": "0.21.9",
     "tsx": "4.21.0",
     "typescript": "6.0.2",

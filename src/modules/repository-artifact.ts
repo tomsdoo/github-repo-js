@@ -2,7 +2,7 @@ import { GitHubRepoApiBase } from "@/modules/base";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubRepositoryArtifact(token: string) {
-  return class extends GitHubRepoApiBase<
+  return class GitHubRepositoryArtifact extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}"]["response"]["data"],
     unknown
   > {
