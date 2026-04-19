@@ -11,12 +11,14 @@ describe("readyGitHubRepositoryCommits()", () => {
     const GitHubRepositoryCommits = readyGitHubRepositoryCommits(token);
     instance = new GitHubRepositoryCommits(owner, repo);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/git/commits`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/git/commits`,
+    );
   });
 });

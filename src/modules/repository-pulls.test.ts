@@ -11,7 +11,6 @@ describe("readyGitHubRepositoryPulls()", () => {
     const GitHubRepositoryPulls = readyGitHubRepositoryPulls(token);
     instance = new GitHubRepositoryPulls(owner, repo);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
@@ -20,6 +19,9 @@ describe("readyGitHubRepositoryPulls()", () => {
     expect(instance).toHaveProperty("pageSizeForRequest", 100);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/pulls`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/pulls`,
+    );
   });
 });

@@ -16,4 +16,3 @@ export function readyGitHubRepositoryBranch(token: string) {
     }
   };
 }
-

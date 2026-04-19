@@ -11,12 +11,14 @@ describe("readyGitHubRepositoryBranches()", () => {
     const GitHubRepositoryBranches = readyGitHubRepositoryBranches(token);
     instance = new GitHubRepositoryBranches(owner, repo);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/branches`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/branches`,
+    );
   });
 });

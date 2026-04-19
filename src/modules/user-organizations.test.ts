@@ -9,7 +9,6 @@ describe("readyGitHubUserOrganizations()", () => {
     const GitHubUserOrganizations = readyGitHubUserOrganizations(token);
     instance = new GitHubUserOrganizations();
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);

@@ -2,7 +2,10 @@ import { GitHubRepoApiBase } from "@/modules/base";
 import { loopPages } from "@/utils";
 import type { Endpoints } from "@octokit/types";
 
-type RepositoryRun = Endpoints["GET /repos/{owner}/{repo}/actions/runs"]["response"]["data"]["workflow_runs"] extends (infer T)[] ? T : never;
+type RepositoryRun =
+  Endpoints["GET /repos/{owner}/{repo}/actions/runs"]["response"]["data"]["workflow_runs"] extends (infer T)[]
+    ? T
+    : never;
 
 export function readyGitHubRepositoryRuns(token: string) {
   return class GitHubRepositoryRuns extends GitHubRepoApiBase<
@@ -34,7 +37,7 @@ export function readyGitHubRepositoryRuns(token: string) {
           cache: "no-store",
         }).then(async (response) => {
           if (!response.ok) {
-            throw new Error(response.statusText, {cause: { response }});
+            throw new Error(response.statusText, { cause: { response } });
           }
           const { workflow_runs } = await response.json();
           return workflow_runs as RepositoryRun[];
@@ -42,5 +45,5 @@ export function readyGitHubRepositoryRuns(token: string) {
         return { resultItems };
       }, this.pageSizeForRequest);
     }
-  }
+  };
 }

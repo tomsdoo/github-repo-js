@@ -12,12 +12,14 @@ describe("readyGitHubReferenceForGet()", () => {
     const GitHubReferenceForGet = readyGitHubReferenceForGet(token);
     instance = new GitHubReferenceForGet(owner, repo, ref);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/git/ref/${ref}`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/git/ref/${ref}`,
+    );
   });
 });

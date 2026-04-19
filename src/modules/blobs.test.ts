@@ -11,12 +11,14 @@ describe("readyGitHubBlobs()", () => {
     const GitHubBlobs = readyGitHubBlobs(token);
     instance = new GitHubBlobs(owner, repo);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/git/blobs`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/git/blobs`,
+    );
   });
 });

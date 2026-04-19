@@ -4,13 +4,15 @@ import { readyGitHubOrganizationRepositories } from "@/modules/organization-repo
 describe("readyGitHubOrganizationRepositories()", () => {
   const token = "dummy";
   const org = "org";
-  let instance: InstanceType<ReturnType<typeof readyGitHubOrganizationRepositories>>;
+  let instance: InstanceType<
+    ReturnType<typeof readyGitHubOrganizationRepositories>
+  >;
 
   beforeEach(() => {
-    const GitHubOrganizationRepositories = readyGitHubOrganizationRepositories(token);
+    const GitHubOrganizationRepositories =
+      readyGitHubOrganizationRepositories(token);
     instance = new GitHubOrganizationRepositories(org);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);

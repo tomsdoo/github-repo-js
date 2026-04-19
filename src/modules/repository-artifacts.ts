@@ -2,7 +2,10 @@ import { GitHubRepoApiBase } from "@/modules/base";
 import { loopPages } from "@/utils";
 import type { Endpoints } from "@octokit/types";
 
-type Artifact = Endpoints["GET /repos/{owner}/{repo}/actions/artifacts"]["response"]["data"]["artifacts"] extends (infer T)[] ? T : never;
+type Artifact =
+  Endpoints["GET /repos/{owner}/{repo}/actions/artifacts"]["response"]["data"]["artifacts"] extends (infer T)[]
+    ? T
+    : never;
 
 export function readyGitHubRepositoryArtifacts(token: string) {
   return class GitHubRepositoryArtifacts extends GitHubRepoApiBase<
@@ -18,7 +21,7 @@ export function readyGitHubRepositoryArtifacts(token: string) {
     get pageSizeForRequest() {
       return 100;
     }
-    async getList(query?: {name: string }) {
+    async getList(query?: { name: string }) {
       return await loopPages(async ({ per_page, page }) => {
         const url = new URL(this.apiEndpoint);
         const params = {
@@ -34,7 +37,7 @@ export function readyGitHubRepositoryArtifacts(token: string) {
           cache: "no-store",
         }).then(async (response) => {
           if (!response.ok) {
-            throw new Error(response.statusText, {cause: { response }});
+            throw new Error(response.statusText, { cause: { response } });
           }
           const { artifacts } = await response.json();
           return artifacts as Artifact[];
@@ -42,5 +45,5 @@ export function readyGitHubRepositoryArtifacts(token: string) {
         return { resultItems };
       }, this.pageSizeForRequest);
     }
-  }
+  };
 }

@@ -12,7 +12,6 @@ describe("readyGitHubUser()", () => {
     const GitHubTree = readyGitHubTree(token);
     instance = new GitHubTree(owner, repo, treeSha);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
@@ -21,6 +20,9 @@ describe("readyGitHubUser()", () => {
     expect(instance).toHaveProperty("treeSha", treeSha);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/git/trees/${treeSha}?recursive=true`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/git/trees/${treeSha}?recursive=true`,
+    );
   });
 });

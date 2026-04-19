@@ -15,10 +15,20 @@ export function readyGitHubIssue(token: string) {
       return `${this.apiOrigin}/repos/${this.owner}/${this.repo}/issues/${this.issueNumber}`;
     }
     async getComments() {
-      return await new GitHubIssueComments(this.owner, this.repo, this.issueNumber).getList();
+      return await new GitHubIssueComments(
+        this.owner,
+        this.repo,
+        this.issueNumber,
+      ).getList();
     }
-    async postComment(...params: Parameters<typeof GitHubIssueComments["prototype"]["post"]>) {
-      return await new GitHubIssueComments(this.owner, this.repo, this.issueNumber).post(...params);
+    async postComment(
+      ...params: Parameters<(typeof GitHubIssueComments)["prototype"]["post"]>
+    ) {
+      return await new GitHubIssueComments(
+        this.owner,
+        this.repo,
+        this.issueNumber,
+      ).post(...params);
     }
   };
 }

@@ -3,7 +3,9 @@ import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubRepositoryPulls(token: string) {
   return class GitHubRepositoryPulls extends GitHubRepoApiBase<
-    Endpoints["GET /repos/{owner}/{repo}/pulls"]["response"]["data"] extends (infer T)[] ? T : never,
+    Endpoints["GET /repos/{owner}/{repo}/pulls"]["response"]["data"] extends (infer T)[]
+      ? T
+      : never,
     Endpoints["POST /repos/{owner}/{repo}/pulls"]["request"]["data"]
   > {
     constructor(owner: string, repo: string) {

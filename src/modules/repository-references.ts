@@ -3,7 +3,9 @@ import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubRepositoryReferences(token: string) {
   class GitHubRepositoryMatchingReferences extends GitHubRepoApiBase<
-    Endpoints["GET /repos/{owner}/{repo}/git/matching-refs/{ref}"]["response"]["data"] extends (infer T)[] ? T : never,
+    Endpoints["GET /repos/{owner}/{repo}/git/matching-refs/{ref}"]["response"]["data"] extends (infer T)[]
+      ? T
+      : never,
     unknown
   > {
     public refName: string;
@@ -16,7 +18,9 @@ export function readyGitHubRepositoryReferences(token: string) {
     }
   }
   return class GitHubRepositoryReferences extends GitHubRepoApiBase<
-    Endpoints["GET /repos/{owner}/{repo}/git/matching-refs/{ref}"]["response"]["data"] extends (infer T)[] ? T : never,
+    Endpoints["GET /repos/{owner}/{repo}/git/matching-refs/{ref}"]["response"]["data"] extends (infer T)[]
+      ? T
+      : never,
     Endpoints["POST /repos/{owner}/{repo}/git/refs"]["request"]["data"]
   > {
     constructor(owner: string, repo: string) {
@@ -26,7 +30,11 @@ export function readyGitHubRepositoryReferences(token: string) {
       return `${this.apiOrigin}/repos/${this.owner}/${this.repo}/git/refs`;
     }
     async getMatchingList(refName: string) {
-      return await new GitHubRepositoryMatchingReferences(this.owner, this.repo, refName).getList();
+      return await new GitHubRepositoryMatchingReferences(
+        this.owner,
+        this.repo,
+        refName,
+      ).getList();
     }
   };
 }

@@ -21,9 +21,9 @@ export function readyGitHubRepositoryArtifact(token: string) {
         cache: "no-store",
       });
       if (!response.ok) {
-        throw new Error(response.statusText, {cause: { response }});
+        throw new Error(response.statusText, { cause: { response } });
       }
       return await response.blob();
     }
-  }
+  };
 }
