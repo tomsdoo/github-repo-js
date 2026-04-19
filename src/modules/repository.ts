@@ -36,11 +36,12 @@ export function readyGitHubRepository(token: string) {
   const GitHubRepositoryPulls = readyGitHubRepositoryPulls(token);
   const GitHubRepositoryReferences = readyGitHubRepositoryReferences(token);
   const GitHubRepositoryReleases = readyGitHubRepositoryReleases(token);
-  const GitHubRepositoryLatestRelease = readyGitHubRepositoryLatestRelease(token);
+  const GitHubRepositoryLatestRelease =
+    readyGitHubRepositoryLatestRelease(token);
   const GitHubRepositoryRuns = readyGitHubRepositoryRuns(token);
   const GitHubRepositoryTrees = readyGitHubRepositoryTrees(token);
   const GitHubTree = readyGitHubTree(token);
-  return class extends GitHubRepoApiBase<
+  return class GitHubRepository extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"],
     Endpoints["PATCH /repos/{owner}/{repo}"]["request"]["data"]
   > {
@@ -50,44 +51,89 @@ export function readyGitHubRepository(token: string) {
     get apiEndpoint() {
       return `${this.apiOrigin}/repos/${this.owner}/${this.repo}`;
     }
-    async getArtifacts(query?: {name: string }) {
-      return await new GitHubRepositoryArtifacts(this.owner, this.repo).getList(query);
+    async getArtifacts(query?: { name: string }) {
+      return await new GitHubRepositoryArtifacts(this.owner, this.repo).getList(
+        query,
+      );
     }
     async getArtifact(artifactId: number) {
-      return await new GitHubRepositoryArtifact(this.owner, this.repo, artifactId).get();
+      return await new GitHubRepositoryArtifact(
+        this.owner,
+        this.repo,
+        artifactId,
+      ).get();
     }
     async getArtifactZipBlob(artifactId: number) {
-      return await new GitHubRepositoryArtifact(this.owner, this.repo, artifactId).downloadBlob();
+      return await new GitHubRepositoryArtifact(
+        this.owner,
+        this.repo,
+        artifactId,
+      ).downloadBlob();
     }
     async getBranches() {
-      return await new GitHubRepositoryBranches(this.owner, this.repo).getList();
+      return await new GitHubRepositoryBranches(
+        this.owner,
+        this.repo,
+      ).getList();
     }
     async getBranch(branchName: string) {
-      return await new GitHubRepositoryBranch(this.owner, this.repo, branchName).get();
+      return await new GitHubRepositoryBranch(
+        this.owner,
+        this.repo,
+        branchName,
+      ).get();
     }
     async getReferences(refName: string) {
-      return await new GitHubRepositoryReferences(this.owner, this.repo).getMatchingList(refName);
+      return await new GitHubRepositoryReferences(
+        this.owner,
+        this.repo,
+      ).getMatchingList(refName);
     }
     async getBranchReferences() {
-      return await new GitHubRepositoryReferences(this.owner, this.repo).getMatchingList("heads/");
+      return await new GitHubRepositoryReferences(
+        this.owner,
+        this.repo,
+      ).getMatchingList("heads/");
     }
     async getTagReferences() {
-      return await new GitHubRepositoryReferences(this.owner, this.repo).getMatchingList("tags/");
+      return await new GitHubRepositoryReferences(
+        this.owner,
+        this.repo,
+      ).getMatchingList("tags/");
     }
-    async postReference(...params: Parameters<typeof GitHubRepositoryReferences["prototype"]["post"]>) {
-      return await new GitHubRepositoryReferences(this.owner, this.repo).post(...params);
+    async postReference(
+      ...params: Parameters<
+        (typeof GitHubRepositoryReferences)["prototype"]["post"]
+      >
+    ) {
+      return await new GitHubRepositoryReferences(this.owner, this.repo).post(
+        ...params,
+      );
     }
     async getReference(ref: string) {
       return await new GitHubReferenceForGet(this.owner, this.repo, ref).get();
     }
     async getBranchReference(branchName: string) {
-      return await new GitHubReferenceForGet(this.owner, this.repo, `heads/${branchName}`).get();
+      return await new GitHubReferenceForGet(
+        this.owner,
+        this.repo,
+        `heads/${branchName}`,
+      ).get();
     }
     async getTagReference(tagName: string) {
-      return await new GitHubReferenceForGet(this.owner, this.repo, `tags/${tagName}`).get();
+      return await new GitHubReferenceForGet(
+        this.owner,
+        this.repo,
+        `tags/${tagName}`,
+      ).get();
     }
-    async patchReference(ref: string, ...params: Parameters<typeof GitHubReference["prototype"]["patch"]>) {
-      return await new GitHubReference(this.owner, this.repo, ref).patch(...params);
+    async patchReference(
+      ref: string,
+      ...params: Parameters<(typeof GitHubReference)["prototype"]["patch"]>
+    ) {
+      return await new GitHubReference(this.owner, this.repo, ref).patch(
+        ...params,
+      );
     }
     async deleteReference(ref: string) {
       return await new GitHubReference(this.owner, this.repo, ref).delete();
@@ -95,20 +141,34 @@ export function readyGitHubRepository(token: string) {
     async getBlob(fileSha: string) {
       return await new GitHubBlob(this.owner, this.repo, fileSha).get();
     }
-    async postBlob(...params: Parameters<typeof GitHubBlobs["prototype"]["post"]>) {
+    async postBlob(
+      ...params: Parameters<(typeof GitHubBlobs)["prototype"]["post"]>
+    ) {
       return await new GitHubBlobs(this.owner, this.repo).post(...params);
     }
     async getTree(sha: string) {
       return await new GitHubTree(this.owner, this.repo, sha).get();
     }
-    async postTree(...params: Parameters<typeof GitHubRepositoryTrees["prototype"]["post"]>) {
-      return await new GitHubRepositoryTrees(this.owner, this.repo).post(...params);
+    async postTree(
+      ...params: Parameters<(typeof GitHubRepositoryTrees)["prototype"]["post"]>
+    ) {
+      return await new GitHubRepositoryTrees(this.owner, this.repo).post(
+        ...params,
+      );
     }
     async getIssues(query?: Record<string, string>) {
-      return await new GitHubRepositoryIssues(this.owner, this.repo).getList(query);
+      return await new GitHubRepositoryIssues(this.owner, this.repo).getList(
+        query,
+      );
     }
-    async postIssue(...params: Parameters<typeof GitHubRepositoryIssues["prototype"]["post"]>) {
-      return await new GitHubRepositoryIssues(this.owner, this.repo).post(...params);
+    async postIssue(
+      ...params: Parameters<
+        (typeof GitHubRepositoryIssues)["prototype"]["post"]
+      >
+    ) {
+      return await new GitHubRepositoryIssues(this.owner, this.repo).post(
+        ...params,
+      );
     }
     issue(issueNumber: number) {
       return new GitHubIssue(this.owner, this.repo, issueNumber);
@@ -116,38 +176,79 @@ export function readyGitHubRepository(token: string) {
     async getIssue(issueNumber: number) {
       return await new GitHubIssue(this.owner, this.repo, issueNumber).get();
     }
-    async patchIssue(issueNumber: number, ...params: Parameters<typeof GitHubIssue["prototype"]["patch"]>) {
-      return await new GitHubIssue(this.owner, this.repo, issueNumber).patch(...params);
+    async patchIssue(
+      issueNumber: number,
+      ...params: Parameters<(typeof GitHubIssue)["prototype"]["patch"]>
+    ) {
+      return await new GitHubIssue(this.owner, this.repo, issueNumber).patch(
+        ...params,
+      );
     }
     async getPulls(query?: Record<string, string>) {
-      return await new GitHubRepositoryPulls(this.owner, this.repo).getList(query);
+      return await new GitHubRepositoryPulls(this.owner, this.repo).getList(
+        query,
+      );
     }
-    async postPull(...params: Parameters<typeof GitHubRepositoryPulls["prototype"]["post"]>) {
-      return await new GitHubRepositoryPulls(this.owner, this.repo).post(...params);
+    async postPull(
+      ...params: Parameters<(typeof GitHubRepositoryPulls)["prototype"]["post"]>
+    ) {
+      return await new GitHubRepositoryPulls(this.owner, this.repo).post(
+        ...params,
+      );
     }
     pull(pullNumber: number) {
       return new GitHubRepositoryPull(this.owner, this.repo, pullNumber);
     }
     async getPull(pullNumber: number) {
-      return await new GitHubRepositoryPull(this.owner, this.repo, pullNumber).get();
+      return await new GitHubRepositoryPull(
+        this.owner,
+        this.repo,
+        pullNumber,
+      ).get();
     }
-    async patchPull(pullNumber: number, ...params: Parameters<typeof GitHubRepositoryPull["prototype"]["post"]>) {
-      return await new GitHubRepositoryPull(this.owner, this.repo, pullNumber).patch(...params);
+    async patchPull(
+      pullNumber: number,
+      ...params: Parameters<(typeof GitHubRepositoryPull)["prototype"]["post"]>
+    ) {
+      return await new GitHubRepositoryPull(
+        this.owner,
+        this.repo,
+        pullNumber,
+      ).patch(...params);
     }
     async getReleases(query?: Record<string, string>) {
-      return await new GitHubRepositoryReleases(this.owner, this.repo).getList(query);
+      return await new GitHubRepositoryReleases(this.owner, this.repo).getList(
+        query,
+      );
     }
-    async postRelease(...params: Parameters<typeof GitHubRepositoryReleases["prototype"]["post"]>) {
-      return await new GitHubRepositoryReleases(this.owner, this.repo).post(...params);
+    async postRelease(
+      ...params: Parameters<
+        (typeof GitHubRepositoryReleases)["prototype"]["post"]
+      >
+    ) {
+      return await new GitHubRepositoryReleases(this.owner, this.repo).post(
+        ...params,
+      );
     }
     async getLatestRelease() {
-      return await new GitHubRepositoryLatestRelease(this.owner, this.repo).get();
+      return await new GitHubRepositoryLatestRelease(
+        this.owner,
+        this.repo,
+      ).get();
     }
-    async postCommit(...params: Parameters<typeof GitHubRepositoryCommits["prototype"]["post"]>) {
-      return await new GitHubRepositoryCommits(this.owner, this.repo).post(...params);
+    async postCommit(
+      ...params: Parameters<
+        (typeof GitHubRepositoryCommits)["prototype"]["post"]
+      >
+    ) {
+      return await new GitHubRepositoryCommits(this.owner, this.repo).post(
+        ...params,
+      );
     }
     async getRuns(query?: Record<string, string | number>) {
-      return await new GitHubRepositoryRuns(this.owner, this.repo).getList(query);
+      return await new GitHubRepositoryRuns(this.owner, this.repo).getList(
+        query,
+      );
     }
   };
 }

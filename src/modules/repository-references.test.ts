@@ -5,18 +5,22 @@ describe("readyGitHubRepositoryReferences()", () => {
   const token = "dummy";
   const owner = "owner";
   const repo = "repo";
-  let instance: InstanceType<ReturnType<typeof readyGitHubRepositoryReferences>>;
+  let instance: InstanceType<
+    ReturnType<typeof readyGitHubRepositoryReferences>
+  >;
 
   beforeEach(() => {
     const GitHubRepositoryReferences = readyGitHubRepositoryReferences(token);
     instance = new GitHubRepositoryReferences(owner, repo);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/git/refs`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/git/refs`,
+    );
   });
 });

@@ -37,9 +37,9 @@ export class GitHubApiBase<Item, ApiRequestBody> {
       const resultItems: Item[] = await fetch(url, {
         headers: this.requestHeaders,
         cache: "no-store",
-      }).then(response => {
+      }).then((response) => {
         if (!response.ok) {
-          throw new Error(response.statusText, { cause: { response }});
+          throw new Error(response.statusText, { cause: { response } });
         }
         return response.json();
       });
@@ -53,10 +53,10 @@ export class GitHubApiBase<Item, ApiRequestBody> {
     }
     const items: Item[] = await fetch(url, {
       headers: this.requestHeaders,
-        cache: "no-store",
-    }).then(response => {
+      cache: "no-store",
+    }).then((response) => {
       if (!response.ok) {
-        throw new Error(response.statusText, { cause: { response }});
+        throw new Error(response.statusText, { cause: { response } });
       }
       return response.json();
     });
@@ -66,9 +66,9 @@ export class GitHubApiBase<Item, ApiRequestBody> {
     const item: Item = await fetch(this.apiEndpoint, {
       headers: this.requestHeaders,
       cache: "no-store",
-    }).then(response => {
+    }).then((response) => {
       if (!response.ok) {
-        throw new Error(response.statusText, { cause: { response }});
+        throw new Error(response.statusText, { cause: { response } });
       }
       return response.json();
     });
@@ -79,9 +79,9 @@ export class GitHubApiBase<Item, ApiRequestBody> {
       method: "POST",
       headers: this.requestHeaders,
       body: JSON.stringify(body),
-    }).then(response => {
+    }).then((response) => {
       if (!response.ok) {
-        throw new Error(response.statusText, { cause: { response }});
+        throw new Error(response.statusText, { cause: { response } });
       }
       return response.json();
     });
@@ -92,9 +92,9 @@ export class GitHubApiBase<Item, ApiRequestBody> {
       method: "PATCH",
       headers: this.requestHeaders,
       body: JSON.stringify(body),
-    }).then(response => {
+    }).then((response) => {
       if (!response.ok) {
-        throw new Error(response.statusText, { cause: { response }});
+        throw new Error(response.statusText, { cause: { response } });
       }
       return response.json();
     });
@@ -106,12 +106,15 @@ export class GitHubApiBase<Item, ApiRequestBody> {
       headers: this.requestHeaders,
     });
     if (!response.ok) {
-      throw new Error(response.statusText, { cause: { response }});
+      throw new Error(response.statusText, { cause: { response } });
     }
   }
 }
 
-export class GitHubRepoApiBase<Item, ApiRequestBody> extends GitHubApiBase<Item, ApiRequestBody> {
+export class GitHubRepoApiBase<Item, ApiRequestBody> extends GitHubApiBase<
+  Item,
+  ApiRequestBody
+> {
   public owner: string;
   public repo: string;
   constructor(token: string, owner: string, repo: string) {
@@ -121,7 +124,10 @@ export class GitHubRepoApiBase<Item, ApiRequestBody> extends GitHubApiBase<Item,
   }
 }
 
-export class GitHubIssueApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<Item, ApiRequestBody> {
+export class GitHubIssueApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<
+  Item,
+  ApiRequestBody
+> {
   public issueNumber: number;
   constructor(token: string, owner: string, repo: string, issueNumber: number) {
     super(token, owner, repo);
@@ -129,7 +135,10 @@ export class GitHubIssueApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<
   }
 }
 
-export class GitHubPullApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<Item, ApiRequestBody> {
+export class GitHubPullApiBase<Item, ApiRequestBody> extends GitHubRepoApiBase<
+  Item,
+  ApiRequestBody
+> {
   public pullNumber: number;
   constructor(token: string, owner: string, repo: string, pullNumber: number) {
     super(token, owner, repo);

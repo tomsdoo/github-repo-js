@@ -11,12 +11,14 @@ describe("readyGitHubRepositoryTrees()", () => {
     const GitHubUser = readyGitHubRepositoryTrees(token);
     instance = new GitHubUser(owner, repo);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/git/trees`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/git/trees`,
+    );
   });
 });

@@ -2,7 +2,7 @@ import { GitHubRepoApiBase } from "@/modules/base";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubBlobs(token: string) {
-  return class extends GitHubRepoApiBase<
+  return class GitHubBlobs extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}/git/blobs/{file_sha}"]["response"]["data"],
     Endpoints["POST /repos/{owner}/{repo}/git/blobs"]["request"]["data"]
   > {

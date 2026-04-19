@@ -2,8 +2,10 @@ import { GitHubApiBase } from "@/modules/base";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubMyIssues(token: string) {
-  return class extends GitHubApiBase<
-    Endpoints["GET /issues"]["response"]["data"] extends (infer T)[] ? T : never,
+  return class GitHubMyIssues extends GitHubApiBase<
+    Endpoints["GET /issues"]["response"]["data"] extends (infer T)[]
+      ? T
+      : never,
     unknown
   > {
     constructor() {

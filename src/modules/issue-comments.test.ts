@@ -12,12 +12,14 @@ describe("readyGitHubIssueComments()", () => {
     const GitHubIssueComments = readyGitHubIssueComments(token);
     instance = new GitHubIssueComments(owner, repo, issueNumber);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/issues/${issueNumber}/comments`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/issues/${issueNumber}/comments`,
+    );
   });
 });

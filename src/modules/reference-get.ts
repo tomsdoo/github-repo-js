@@ -2,7 +2,7 @@ import { GitHubRepoApiBase } from "@/modules/base";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubReferenceForGet(token: string) {
-  return class extends GitHubRepoApiBase<
+  return class GitHubReferenceForGet extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}/git/ref/{ref}"]["response"]["data"],
     unknown
   > {

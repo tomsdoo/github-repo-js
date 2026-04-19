@@ -2,8 +2,10 @@ import { GitHubRepoApiBase } from "@/modules/base";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubRepositoryReleases(token: string) {
-  return class extends GitHubRepoApiBase<
-    Endpoints["GET /repos/{owner}/{repo}/releases"]["response"]["data"] extends (infer T)[] ? T : never,
+  return class GitHubRepositoryReleases extends GitHubRepoApiBase<
+    Endpoints["GET /repos/{owner}/{repo}/releases"]["response"]["data"] extends (infer T)[]
+      ? T
+      : never,
     Endpoints["POST /repos/{owner}/{repo}/releases"]["request"]["data"]
   > {
     constructor(owner: string, repo: string) {

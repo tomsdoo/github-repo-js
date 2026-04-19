@@ -9,7 +9,6 @@ describe("readyGitHubUser()", () => {
     const GitHubUser = readyGitHubUser(token);
     instance = new GitHubUser();
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);

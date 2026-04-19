@@ -12,12 +12,14 @@ describe("readyGitHubRepositoryPull()", () => {
     const GitHubRepositoryPull = readyGitHubRepositoryPull(token);
     instance = new GitHubRepositoryPull(owner, repo, pullNumber);
     vi.spyOn(instance, "apiOrigin", "get").mockReturnValue("");
-
   });
   it("has token", () => {
     expect(instance).toHaveProperty("token", token);
   });
   it("apiEndPoint is correct", () => {
-    expect(instance).toHaveProperty("apiEndpoint", `/repos/${owner}/${repo}/pulls/${pullNumber}`);
+    expect(instance).toHaveProperty(
+      "apiEndpoint",
+      `/repos/${owner}/${repo}/pulls/${pullNumber}`,
+    );
   });
 });
