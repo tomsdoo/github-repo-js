@@ -39,7 +39,7 @@
     "tsc-alias": "1.8.16",
     "tsdown": "0.21.9",
     "tsx": "4.21.0",
-    "typescript": "6.0.2",
+    "typescript": "6.0.3",
     "vitest": "4.1.4"
   }
 }
