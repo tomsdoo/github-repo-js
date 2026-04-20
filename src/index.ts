@@ -50,4 +50,7 @@ export class GitHubFacade {
     const { GitHubRepository } = this.githubClasses;
     return new GitHubRepository(owner, repo);
   }
+  async queryGraphQL<T>(query: string, variables?: Record<string, any>) {
+    return await new this.githubClasses.GitHubGraphQL().doQuery<T>({ query, variables });
+  }
 }

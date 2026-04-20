@@ -5,6 +5,7 @@ import { readyGitHubRepositoryIssues } from "@/modules/repository-issues";
 import { readyGitHubUser } from "@/modules/user";
 import { readyGitHubUserOrganizations } from "@/modules/user-organizations";
 import { readyGitHubUserRepositories } from "@/modules/user-repositories";
+import { readyGitHubGraphQL } from "@/modules/graphql";
 
 export function readyGitHubClasses(token: string) {
   return {
@@ -15,5 +16,6 @@ export function readyGitHubClasses(token: string) {
     GitHubUser: readyGitHubUser(token),
     GitHubUserOrganizations: readyGitHubUserOrganizations(token),
     GitHubUserRepositories: readyGitHubUserRepositories(token),
+    GitHubGraphQL: readyGitHubGraphQL(token),
   };
 }
