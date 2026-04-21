@@ -1,4 +1,5 @@
 import { readyGitHubClasses } from "@/modules/github-classes";
+import { createClient } from "@/generated/github";
 
 export class GitHubFacade {
   protected token: string;
@@ -6,6 +7,13 @@ export class GitHubFacade {
   constructor(token: string) {
     this.token = token;
     this.githubClasses = readyGitHubClasses(token);
+  }
+  get graphql() {
+    return createClient({
+      headers: {
+        authorization: `Bearer ${this.token}`,
+      },
+    });
   }
   async getMe() {
     return await new this.githubClasses.GitHubUser().get();
