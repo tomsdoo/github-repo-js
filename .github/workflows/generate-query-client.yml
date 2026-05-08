@@ -26,6 +26,8 @@ jobs:
 
     - name: generate query client
       run: npm run generate-query-client
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: build
       run: npm run build
