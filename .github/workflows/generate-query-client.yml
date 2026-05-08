@@ -2,9 +2,8 @@ name: generate query client
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - generate-query-client
+  schedule:
+    - cron: '0 0 * * 6' # every Saturday at midnight
 
 jobs:
   build:
