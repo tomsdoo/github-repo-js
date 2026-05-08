@@ -48,18 +48,17 @@ jobs:
           echo "No changes detected. Skipping PR creation."
         else
           echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          git commit -m "Generate query client"
+          git push
         fi
 
     - name: create or update pull request
       if: steps.changes.outputs.has_changes == 'true'
-      uses: peter-evans/create-pull-request@v7
+      uses: tomsdoo/actions/ensure-pull-request@8141f2e4003ff2d73b564aa12cb1669e823a48cf
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: Generate query client
+        base-branch: main
+        head-branch: generate-query-client
         title: Generate query client
-        body: |
-          This PR was created automatically because generated query client files changed.
-        branch: generate-query-client
-        base: ${{ github.event.repository.default_branch }}
+        summary: generated query client files
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
