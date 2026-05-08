@@ -19043,7 +19043,7 @@ export interface RepositoryRuleset {
 }
 
 
-/** A team or app that has the ability to bypass a rules defined on a ruleset */
+/** A team, app or user that has the ability to bypass rules defined on a ruleset */
 export interface RepositoryRulesetBypassActor {
     /** The actor that can bypass rules. */
     actor: (BypassActor | null)
@@ -19053,6 +19053,8 @@ export interface RepositoryRulesetBypassActor {
     deployKey: Scalars['Boolean']
     /** This actor represents the ability for an enterprise owner to bypass */
     enterpriseOwner: Scalars['Boolean']
+    /** This actor represents the ability for an enterprise role to bypass */
+    enterpriseRole: Scalars['Boolean']
     /** The Node ID of the RepositoryRulesetBypassActor object */
     id: Scalars['ID']
     /** This actor represents the ability for an organization owner to bypass */
@@ -21955,6 +21957,10 @@ export type TeamRepositoryOrderField = 'CREATED_AT' | 'UPDATED_AT' | 'PUSHED_AT'
 
 /** The possible team review assignment algorithms */
 export type TeamReviewAssignmentAlgorithm = 'ROUND_ROBIN' | 'LOAD_BALANCE'
+
+
+/** Represents a team that can be requested to review a pull request. */
+export type TeamReviewRequestable = (Team) & { __isUnion?: true }
 
 
 /** The role of a user on a team. */
@@ -25520,6 +25526,7 @@ export interface BranchActorAllowanceActorGenqlSelection{
     on_Node?: NodeGenqlSelection,
     on_MemberStatusable?: MemberStatusableGenqlSelection,
     on_Subscribable?: SubscribableGenqlSelection,
+    on_TeamReviewRequestable?: TeamReviewRequestableGenqlSelection,
     on_Actor?: ActorGenqlSelection,
     on_Agentic?: AgenticGenqlSelection,
     on_PackageOwner?: PackageOwnerGenqlSelection,
@@ -25769,6 +25776,7 @@ export interface BypassActorGenqlSelection{
     on_Node?: NodeGenqlSelection,
     on_MemberStatusable?: MemberStatusableGenqlSelection,
     on_Subscribable?: SubscribableGenqlSelection,
+    on_TeamReviewRequestable?: TeamReviewRequestableGenqlSelection,
     on_Actor?: ActorGenqlSelection,
     on_Agentic?: AgenticGenqlSelection,
     on_PackageOwner?: PackageOwnerGenqlSelection,
@@ -30409,6 +30417,7 @@ export interface DeploymentReviewerGenqlSelection{
     on_MemberStatusable?: MemberStatusableGenqlSelection,
     on_Node?: NodeGenqlSelection,
     on_Subscribable?: SubscribableGenqlSelection,
+    on_TeamReviewRequestable?: TeamReviewRequestableGenqlSelection,
     on_Actor?: ActorGenqlSelection,
     on_Agentic?: AgenticGenqlSelection,
     on_PackageOwner?: PackageOwnerGenqlSelection,
@@ -42801,6 +42810,7 @@ export interface PermissionGranterGenqlSelection{
     on_RepositoryInfo?: RepositoryInfoGenqlSelection,
     on_Starrable?: StarrableGenqlSelection,
     on_Subscribable?: SubscribableGenqlSelection,
+    on_TeamReviewRequestable?: TeamReviewRequestableGenqlSelection,
     __typename?: boolean | number
 }
 
@@ -44056,6 +44066,7 @@ export interface ProjectV2ActorGenqlSelection{
     on_MemberStatusable?: MemberStatusableGenqlSelection,
     on_Node?: NodeGenqlSelection,
     on_Subscribable?: SubscribableGenqlSelection,
+    on_TeamReviewRequestable?: TeamReviewRequestableGenqlSelection,
     on_Actor?: ActorGenqlSelection,
     on_Agentic?: AgenticGenqlSelection,
     on_PackageOwner?: PackageOwnerGenqlSelection,
@@ -44928,6 +44939,8 @@ export interface ProjectV2SingleSelectFieldOptionGenqlSelection{
 
 /** Represents a single select field option */
 export interface ProjectV2SingleSelectFieldOptionInput {
+/** The ID of an existing single select option. Include this to preserve the option's identity during updates, preventing item field values from being cleared. */
+id?: (Scalars['String'] | null),
 /** The name of the option */
 name: Scalars['String'],
 /** The display color of the option */
@@ -46814,6 +46827,7 @@ export interface PushAllowanceActorGenqlSelection{
     on_Node?: NodeGenqlSelection,
     on_MemberStatusable?: MemberStatusableGenqlSelection,
     on_Subscribable?: SubscribableGenqlSelection,
+    on_TeamReviewRequestable?: TeamReviewRequestableGenqlSelection,
     on_Actor?: ActorGenqlSelection,
     on_Agentic?: AgenticGenqlSelection,
     on_PackageOwner?: PackageOwnerGenqlSelection,
@@ -51842,7 +51856,7 @@ export interface RepositoryRulesetGenqlSelection{
 }
 
 
-/** A team or app that has the ability to bypass a rules defined on a ruleset */
+/** A team, app or user that has the ability to bypass rules defined on a ruleset */
 export interface RepositoryRulesetBypassActorGenqlSelection{
     /** The actor that can bypass rules. */
     actor?: BypassActorGenqlSelection
@@ -51852,6 +51866,8 @@ export interface RepositoryRulesetBypassActorGenqlSelection{
     deployKey?: boolean | number
     /** This actor represents the ability for an enterprise owner to bypass */
     enterpriseOwner?: boolean | number
+    /** This actor represents the ability for an enterprise role to bypass */
+    enterpriseRole?: boolean | number
     /** The Node ID of the RepositoryRulesetBypassActor object */
     id?: boolean | number
     /** This actor represents the ability for an organization owner to bypass */
@@ -51895,7 +51911,7 @@ export interface RepositoryRulesetBypassActorEdgeGenqlSelection{
 
 /** Specifies the attributes for a new or updated ruleset bypass actor. Only one of `actor_id`, `repository_role_database_id`, `organization_admin`, or `deploy_key` should be specified. */
 export interface RepositoryRulesetBypassActorInput {
-/** For Team and Integration bypasses, the Team or Integration ID */
+/** For Team, Integration and User bypasses, the Team, Integration, or User ID */
 actorId?: (Scalars['ID'] | null),
 /** For role bypasses, the role database ID */
 repositoryRoleDatabaseId?: (Scalars['Int'] | null),
@@ -51903,6 +51919,8 @@ repositoryRoleDatabaseId?: (Scalars['Int'] | null),
 organizationAdmin?: (Scalars['Boolean'] | null),
 /** For enterprise owner bypasses, true */
 enterpriseOwner?: (Scalars['Boolean'] | null),
+/** For enterprise role bypasses, true. NOTE: This bypass actor is in beta. */
+enterpriseRole?: (Scalars['Boolean'] | null),
 /** For deploy key bypasses, true. Can only use ALWAYS as the bypass mode */
 deployKey?: (Scalars['Boolean'] | null),
 /** The bypass mode for this actor. */
@@ -52345,6 +52363,7 @@ export interface RequestedReviewerGenqlSelection{
     on_UniformResourceLocatable?: UniformResourceLocatableGenqlSelection,
     on_MemberStatusable?: MemberStatusableGenqlSelection,
     on_Subscribable?: SubscribableGenqlSelection,
+    on_TeamReviewRequestable?: TeamReviewRequestableGenqlSelection,
     on_Agentic?: AgenticGenqlSelection,
     on_PackageOwner?: PackageOwnerGenqlSelection,
     on_ProfileOwner?: ProfileOwnerGenqlSelection,
@@ -52612,6 +52631,7 @@ export interface ReviewDismissalAllowanceActorGenqlSelection{
     on_Node?: NodeGenqlSelection,
     on_MemberStatusable?: MemberStatusableGenqlSelection,
     on_Subscribable?: SubscribableGenqlSelection,
+    on_TeamReviewRequestable?: TeamReviewRequestableGenqlSelection,
     on_Actor?: ActorGenqlSelection,
     on_Agentic?: AgenticGenqlSelection,
     on_PackageOwner?: PackageOwnerGenqlSelection,
@@ -55738,6 +55758,20 @@ export interface TeamRepositoryOrder {
 field: TeamRepositoryOrderField,
 /** The ordering direction. */
 direction: OrderDirection}
+
+
+/** Represents a team that can be requested to review a pull request. */
+export interface TeamReviewRequestableGenqlSelection{
+    /** The Node ID of the TeamReviewRequestable object */
+    id?: boolean | number
+    /** The name of the team. */
+    name?: boolean | number
+    /** A unique, human-readable identifier for the team. */
+    slug?: boolean | number
+    on_Team?: TeamGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
 
 
 /** A text match within a search result. */
@@ -59883,6 +59917,7 @@ export interface _EntityGenqlSelection{
     on_TopicAuditEntryData?: TopicAuditEntryDataGenqlSelection,
     on_RepositoryInfo?: RepositoryInfoGenqlSelection,
     on_Migration?: MigrationGenqlSelection,
+    on_TeamReviewRequestable?: TeamReviewRequestableGenqlSelection,
     on_TeamAuditEntryData?: TeamAuditEntryDataGenqlSelection,
     on_Agentic?: AgenticGenqlSelection,
     __typename?: boolean | number
@@ -67461,6 +67496,14 @@ export interface _EntityGenqlSelection{
     export const isTeamRepositoryEdge = (obj?: { __typename?: any } | null): obj is TeamRepositoryEdge => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isTeamRepositoryEdge"')
       return TeamRepositoryEdge_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const TeamReviewRequestable_possibleTypes: string[] = ['Team']
+    export const isTeamReviewRequestable = (obj?: { __typename?: any } | null): obj is TeamReviewRequestable => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isTeamReviewRequestable"')
+      return TeamReviewRequestable_possibleTypes.includes(obj.__typename)
     }
     
 
