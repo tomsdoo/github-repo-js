@@ -43,6 +43,10 @@ jobs:
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
         git add .
+        if git diff --cached --quiet; then
+          echo "No changes to commit. Skipping push."
+          exit 0
+        fi
         git commit -m "Generate query client"
         git push
       env:
