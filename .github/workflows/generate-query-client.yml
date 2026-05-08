@@ -47,11 +47,16 @@ jobs:
           echo "has_changes=false" >> "$GITHUB_OUTPUT"
           echo "No changes detected. Skipping PR creation."
         else
+          current_branch="$(git branch --show-current)"
+          if [ "$current_branch" != "generate-query-client" ]; then
+            git switch generate-query-client 2>/dev/null || git switch -c generate-query-client
+          fi
+
           echo "has_changes=true" >> "$GITHUB_OUTPUT"
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
           git commit -m "Generate query client"
-          git push
+          git push --set-upstream origin generate-query-client
         fi
 
     - name: create or update pull request
