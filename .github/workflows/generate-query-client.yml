@@ -48,6 +48,8 @@ jobs:
           echo "No changes detected. Skipping PR creation."
         else
           echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
           git commit -m "Generate query client"
           git push
         fi
