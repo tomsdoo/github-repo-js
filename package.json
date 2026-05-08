@@ -16,6 +16,7 @@
     "dist"
   ],
   "scripts": {
+    "generate-query-client": "tsx prepare-gql.ts",
     "build": "tsdown && tsc -p tsconfig.types.json && tsc-alias -p tsconfig.types.json",
     "test": "vitest"
   },
