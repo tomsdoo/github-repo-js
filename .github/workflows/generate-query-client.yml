@@ -1,6 +1,7 @@
-name: CI
+name: generate query client
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - generate-query-client
