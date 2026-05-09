@@ -8943,7 +8943,7 @@ enum EnterpriseAllowPrivateRepositoryForkingPolicyValue {
   USER_ACCOUNTS
 
   """
-  Members can fork a repository to their user account or an organization, either inside or outside of this enterprise.
+  Members can fork a repository to their user account or an organization, either inside or outside of this enterprise. Internal repositories can only be forked inside of this enterprise.
   """
   EVERYWHERE
 }
@@ -24519,6 +24519,11 @@ enum ProjectV2SingleSelectFieldOptionColor {
 
 """Represents a single select field option"""
 input ProjectV2SingleSelectFieldOptionInput {
+  """
+  The ID of an existing single select option. Include this to preserve the option's identity during updates, preventing item field values from being cleared.
+  """
+  id: String
+
   """The name of the option"""
   name: String!
 
@@ -33116,7 +33121,7 @@ type RepositoryRuleset implements Node {
 }
 
 """
-A team or app that has the ability to bypass a rules defined on a ruleset
+A team, app or user that has the ability to bypass rules defined on a ruleset
 """
 type RepositoryRulesetBypassActor implements Node {
   """The actor that can bypass rules."""
@@ -33130,6 +33135,9 @@ type RepositoryRulesetBypassActor implements Node {
 
   """This actor represents the ability for an enterprise owner to bypass"""
   enterpriseOwner: Boolean!
+
+  """This actor represents the ability for an enterprise role to bypass"""
+  enterpriseRole: Boolean!
 
   """The Node ID of the RepositoryRulesetBypassActor object"""
   id: ID!
@@ -33191,7 +33199,9 @@ type RepositoryRulesetBypassActorEdge {
 Specifies the attributes for a new or updated ruleset bypass actor. Only one of `actor_id`, `repository_role_database_id`, `organization_admin`, or `deploy_key` should be specified.
 """
 input RepositoryRulesetBypassActorInput {
-  """For Team and Integration bypasses, the Team or Integration ID"""
+  """
+  For Team, Integration and User bypasses, the Team, Integration, or User ID
+  """
   actorId: ID
 
   """For role bypasses, the role database ID"""
@@ -33202,6 +33212,11 @@ input RepositoryRulesetBypassActorInput {
 
   """For enterprise owner bypasses, true"""
   enterpriseOwner: Boolean
+
+  """
+  For enterprise role bypasses, true. NOTE: This bypass actor is in beta.
+  """
+  enterpriseRole: Boolean
 
   """For deploy key bypasses, true. Can only use ALWAYS as the bypass mode"""
   deployKey: Boolean
@@ -34742,6 +34757,9 @@ enum SecurityAdvisorySeverity {
 
   """Critical."""
   CRITICAL
+
+  """Unknown."""
+  UNKNOWN
 }
 
 """An individual vulnerability within an Advisory"""
@@ -37648,7 +37666,7 @@ input TagNamePatternParametersInput {
 }
 
 """A team of users in an organization."""
-type Team implements MemberStatusable & Node & Subscribable {
+type Team implements MemberStatusable & Node & Subscribable & TeamReviewRequestable {
   """A list of teams that are ancestors of this team."""
   ancestors(
     """Returns the elements in the list that come after the specified cursor."""
@@ -38554,6 +38572,18 @@ enum TeamReviewAssignmentAlgorithm {
 
   """Balance review load across the entire team"""
   LOAD_BALANCE
+}
+
+"""Represents a team that can be requested to review a pull request."""
+interface TeamReviewRequestable {
+  """The Node ID of the TeamReviewRequestable object"""
+  id: ID!
+
+  """The name of the team."""
+  name: String!
+
+  """A unique, human-readable identifier for the team."""
+  slug: String!
 }
 
 """The role of a user on a team."""
