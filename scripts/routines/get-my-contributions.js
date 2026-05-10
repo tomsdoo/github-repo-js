@@ -97,28 +97,56 @@ export default async function work({ github }, startDateStr, endDateStr) {
     pullRequestContributions,
     pullRequestReviewContributions,
   } = responseData.viewer.contributionsCollection;
+
   console.log(
     `Contributions from ${startDate.toDateString()} to ${endDate.toDateString()}:`,
   );
-  console.log("Pull Request Contributions:");
+
   const { locale, timeZone } = Intl.DateTimeFormat().resolvedOptions();
-  pullRequestContributions.nodes.forEach(({ occurredAt, pullRequest }) => {
+  function formatDate(dateStr) {
+    return new Date(dateStr).toLocaleString(locale, { timeZone });
+  }
+  function formatLogEntry(occurredAt, repo, number, title, url) {
+    return `- [${formatDate(occurredAt)}] ${repo.owner.login}/${repo.name}#${number} ${title} (${url})`;
+  }
+
+  console.log("Pull Request Contributions:");
+  for (const { occurredAt, pullRequest } of pullRequestContributions.nodes) {
     console.log(
-      `- [${new Date(occurredAt).toLocaleString(locale, { timeZone })}] ${pullRequest.baseRepository.owner.login}/${pullRequest.baseRepository.name}#${pullRequest.number} ${pullRequest.title} (${pullRequest.url})`,
+      formatLogEntry(
+        occurredAt,
+        pullRequest.baseRepository,
+        pullRequest.number,
+        pullRequest.title,
+        pullRequest.url,
+      ),
     );
-  });
+  }
   console.log("\nIssue Contributions:");
-  issueContributions.nodes.forEach(({ occurredAt, issue }) => {
+  for (const { occurredAt, issue } of issueContributions.nodes) {
     console.log(
-      `- [${new Date(occurredAt).toLocaleString(locale, { timeZone })}] ${issue.repository.owner.login}/${issue.repository.name}#${issue.number} ${issue.title} (${issue.url})`,
+      formatLogEntry(
+        occurredAt,
+        issue.repository,
+        issue.number,
+        issue.title,
+        issue.url,
+      ),
     );
-  });
+  }
   console.log("\nPull Request Review Contributions:");
-  pullRequestReviewContributions.nodes.forEach(
-    ({ occurredAt, pullRequest }) => {
-      console.log(
-        `- [${new Date(occurredAt).toLocaleString(locale, { timeZone })}] ${pullRequest.baseRepository.owner.login}/${pullRequest.baseRepository.name}#${pullRequest.number} ${pullRequest.title} (${pullRequest.url})`,
-      );
-    },
-  );
+  for (const {
+    occurredAt,
+    pullRequest,
+  } of pullRequestReviewContributions.nodes) {
+    console.log(
+      formatLogEntry(
+        occurredAt,
+        pullRequest.baseRepository,
+        pullRequest.number,
+        pullRequest.title,
+        pullRequest.url,
+      ),
+    );
+  }
 }
