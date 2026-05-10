@@ -25,15 +25,6 @@ export default async function work({ github }, startDateStr, endDateStr) {
   const responseData = await github.graphql.query({
     viewer: {
       login: true,
-      organizations: {
-        __args: {
-          first: 100,
-        },
-        nodes: {
-          id: true,
-          login: true,
-        },
-      },
       contributionsCollection: {
         __args: {
           from: startDate.toISOString(),
