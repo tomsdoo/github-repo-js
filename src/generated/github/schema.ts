@@ -2069,6 +2069,24 @@ export interface ConnectedEvent {
 }
 
 
+/** The content warning for a repository */
+export interface ContentWarning {
+    /** The content warning' category. E.g. 'mis_dis_information' */
+    category: Scalars['String']
+    /** The content warning's custom sub category text. E.g. 'dangerous stuff.' */
+    customSubCategory: (Scalars['String'] | null)
+    /** The content warning's sub category. E.g. 'medical_scientific' */
+    subCategory: (Scalars['String'] | null)
+    /** The content warning's sub title. E.g. 'The information contained in this page has not been verified.' */
+    subTitle: (Scalars['String'] | null)
+    /** The content warning's title. E.g. 'This page may contain false or misleading information.' */
+    title: Scalars['String']
+    /** The type of content warning. E.g. 'interstitial' */
+    type: Scalars['String']
+    __typename: 'ContentWarning'
+}
+
+
 /** The Contributing Guidelines for a repository. */
 export interface ContributingGuidelines {
     /** The body of the Contributing Guidelines. */
@@ -13654,7 +13672,7 @@ export type ProjectV2FieldOrderField = 'POSITION' | 'CREATED_AT' | 'NAME'
 
 
 /** The type of a project field. */
-export type ProjectV2FieldType = 'ASSIGNEES' | 'LINKED_PULL_REQUESTS' | 'REVIEWERS' | 'LABELS' | 'MILESTONE' | 'REPOSITORY' | 'TITLE' | 'TEXT' | 'SINGLE_SELECT' | 'NUMBER' | 'DATE' | 'ITERATION' | 'TRACKS' | 'TRACKED_BY' | 'ISSUE_TYPE' | 'PARENT_ISSUE' | 'SUB_ISSUES_PROGRESS'
+export type ProjectV2FieldType = 'ASSIGNEES' | 'LINKED_PULL_REQUESTS' | 'REVIEWERS' | 'LABELS' | 'MILESTONE' | 'REPOSITORY' | 'TITLE' | 'TEXT' | 'SINGLE_SELECT' | 'NUMBER' | 'DATE' | 'ITERATION' | 'TRACKS' | 'TRACKED_BY' | 'ISSUE_TYPE' | 'PARENT_ISSUE' | 'SUB_ISSUES_PROGRESS' | 'CREATED' | 'UPDATED' | 'CLOSED'
 
 
 /** Possible issue field values for a Project item. */
@@ -18518,6 +18536,8 @@ export interface Repository {
     viewerCanSubscribe: Scalars['Boolean']
     /** Indicates whether the viewer can update the topics of this repository. */
     viewerCanUpdateTopics: Scalars['Boolean']
+    /** The content warning for this repository for the viewer. */
+    viewerContentWarning: (ContentWarning | null)
     /** The last commit email for the viewer. */
     viewerDefaultCommitEmail: (Scalars['String'] | null)
     /** The last used merge method by the viewer or the default for the repository. */
@@ -19012,7 +19032,7 @@ export type RepositoryRuleOrderField = 'UPDATED_AT' | 'CREATED_AT' | 'TYPE'
 
 
 /** The rule types supported in rulesets */
-export type RepositoryRuleType = 'CREATION' | 'UPDATE' | 'DELETION' | 'REQUIRED_LINEAR_HISTORY' | 'MERGE_QUEUE' | 'REQUIRED_REVIEW_THREAD_RESOLUTION' | 'REQUIRED_DEPLOYMENTS' | 'REQUIRED_SIGNATURES' | 'PULL_REQUEST' | 'REQUIRED_STATUS_CHECKS' | 'REQUIRED_WORKFLOW_STATUS_CHECKS' | 'NON_FAST_FORWARD' | 'AUTHORIZATION' | 'TAG' | 'MERGE_QUEUE_LOCKED_REF' | 'LOCK_BRANCH' | 'MAX_REF_UPDATES' | 'COMMIT_MESSAGE_PATTERN' | 'COMMIT_AUTHOR_EMAIL_PATTERN' | 'COMMITTER_EMAIL_PATTERN' | 'BRANCH_NAME_PATTERN' | 'TAG_NAME_PATTERN' | 'FILE_PATH_RESTRICTION' | 'MAX_FILE_PATH_LENGTH' | 'FILE_EXTENSION_RESTRICTION' | 'MAX_FILE_SIZE' | 'WORKFLOWS' | 'SECRET_SCANNING' | 'WORKFLOW_UPDATES' | 'CODE_SCANNING' | 'COPILOT_CODE_REVIEW'
+export type RepositoryRuleType = 'CREATION' | 'UPDATE' | 'DELETION' | 'REQUIRED_LINEAR_HISTORY' | 'MERGE_QUEUE' | 'REQUIRED_REVIEW_THREAD_RESOLUTION' | 'REQUIRED_DEPLOYMENTS' | 'REQUIRED_SIGNATURES' | 'PULL_REQUEST' | 'REQUIRED_STATUS_CHECKS' | 'REQUIRED_WORKFLOW_STATUS_CHECKS' | 'NON_FAST_FORWARD' | 'AUTHORIZATION' | 'TAG' | 'MERGE_QUEUE_LOCKED_REF' | 'LOCK_BRANCH' | 'MAX_REF_UPDATES' | 'COMMIT_MESSAGE_PATTERN' | 'COMMIT_AUTHOR_EMAIL_PATTERN' | 'COMMITTER_EMAIL_PATTERN' | 'BRANCH_NAME_PATTERN' | 'TAG_NAME_PATTERN' | 'WORKFLOWS' | 'WORKFLOW_UPDATES' | 'CODE_SCANNING' | 'COPILOT_CODE_REVIEW' | 'FILE_PATH_RESTRICTION' | 'MAX_FILE_PATH_LENGTH' | 'FILE_EXTENSION_RESTRICTION' | 'MAX_FILE_SIZE' | 'SECRET_SCANNING'
 
 
 /** A repository ruleset. */
@@ -27430,6 +27450,25 @@ export interface ConnectedEventGenqlSelection{
     source?: ReferencedSubjectGenqlSelection
     /** Issue or pull request which was connected. */
     subject?: ReferencedSubjectGenqlSelection
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+
+/** The content warning for a repository */
+export interface ContentWarningGenqlSelection{
+    /** The content warning' category. E.g. 'mis_dis_information' */
+    category?: boolean | number
+    /** The content warning's custom sub category text. E.g. 'dangerous stuff.' */
+    customSubCategory?: boolean | number
+    /** The content warning's sub category. E.g. 'medical_scientific' */
+    subCategory?: boolean | number
+    /** The content warning's sub title. E.g. 'The information contained in this page has not been verified.' */
+    subTitle?: boolean | number
+    /** The content warning's title. E.g. 'This page may contain false or misleading information.' */
+    title?: boolean | number
+    /** The type of content warning. E.g. 'interstitial' */
+    type?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -51019,6 +51058,8 @@ export interface RepositoryGenqlSelection{
     viewerCanSubscribe?: boolean | number
     /** Indicates whether the viewer can update the topics of this repository. */
     viewerCanUpdateTopics?: boolean | number
+    /** The content warning for this repository for the viewer. */
+    viewerContentWarning?: ContentWarningGenqlSelection
     /** The last commit email for the viewer. */
     viewerDefaultCommitEmail?: boolean | number
     /** The last used merge method by the viewer or the default for the repository. */
@@ -51909,7 +51950,7 @@ export interface RepositoryRulesetBypassActorEdgeGenqlSelection{
 }
 
 
-/** Specifies the attributes for a new or updated ruleset bypass actor. Only one of `actor_id`, `repository_role_database_id`, `organization_admin`, or `deploy_key` should be specified. */
+/** Specifies the attributes for a new or updated ruleset bypass actor. Only one of `actor_id`, `repository_role_database_id`, `organization_admin`, `enterprise_owner`, or `deploy_key` should be specified. */
 export interface RepositoryRulesetBypassActorInput {
 /** For Team, Integration and User bypasses, the Team, Integration, or User ID */
 actorId?: (Scalars['ID'] | null),
@@ -52896,6 +52937,12 @@ committerEmailPattern?: (CommitterEmailPatternParametersInput | null),
 branchNamePattern?: (BranchNamePatternParametersInput | null),
 /** Parameters used for the `tag_name_pattern` rule type */
 tagNamePattern?: (TagNamePatternParametersInput | null),
+/** Parameters used for the `workflows` rule type */
+workflows?: (WorkflowsParametersInput | null),
+/** Parameters used for the `code_scanning` rule type */
+codeScanning?: (CodeScanningParametersInput | null),
+/** Parameters used for the `copilot_code_review` rule type */
+copilotCodeReview?: (CopilotCodeReviewParametersInput | null),
 /** Parameters used for the `file_path_restriction` rule type */
 filePathRestriction?: (FilePathRestrictionParametersInput | null),
 /** Parameters used for the `max_file_path_length` rule type */
@@ -52903,13 +52950,7 @@ maxFilePathLength?: (MaxFilePathLengthParametersInput | null),
 /** Parameters used for the `file_extension_restriction` rule type */
 fileExtensionRestriction?: (FileExtensionRestrictionParametersInput | null),
 /** Parameters used for the `max_file_size` rule type */
-maxFileSize?: (MaxFileSizeParametersInput | null),
-/** Parameters used for the `workflows` rule type */
-workflows?: (WorkflowsParametersInput | null),
-/** Parameters used for the `code_scanning` rule type */
-codeScanning?: (CodeScanningParametersInput | null),
-/** Parameters used for the `copilot_code_review` rule type */
-copilotCodeReview?: (CopilotCodeReviewParametersInput | null)}
+maxFileSize?: (MaxFileSizeParametersInput | null)}
 
 
 /** Types which can have `RepositoryRule` objects. */
@@ -61008,6 +61049,14 @@ export interface _EntityGenqlSelection{
     export const isConnectedEvent = (obj?: { __typename?: any } | null): obj is ConnectedEvent => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isConnectedEvent"')
       return ConnectedEvent_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const ContentWarning_possibleTypes: string[] = ['ContentWarning']
+    export const isContentWarning = (obj?: { __typename?: any } | null): obj is ContentWarning => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isContentWarning"')
+      return ContentWarning_possibleTypes.includes(obj.__typename)
     }
     
 
@@ -69566,7 +69615,10 @@ export const enumProjectV2FieldType = {
    TRACKED_BY: 'TRACKED_BY' as const,
    ISSUE_TYPE: 'ISSUE_TYPE' as const,
    PARENT_ISSUE: 'PARENT_ISSUE' as const,
-   SUB_ISSUES_PROGRESS: 'SUB_ISSUES_PROGRESS' as const
+   SUB_ISSUES_PROGRESS: 'SUB_ISSUES_PROGRESS' as const,
+   CREATED: 'CREATED' as const,
+   UPDATED: 'UPDATED' as const,
+   CLOSED: 'CLOSED' as const
 }
 
 export const enumProjectV2ItemFieldValueOrderField = {
@@ -69989,15 +70041,15 @@ export const enumRepositoryRuleType = {
    COMMITTER_EMAIL_PATTERN: 'COMMITTER_EMAIL_PATTERN' as const,
    BRANCH_NAME_PATTERN: 'BRANCH_NAME_PATTERN' as const,
    TAG_NAME_PATTERN: 'TAG_NAME_PATTERN' as const,
+   WORKFLOWS: 'WORKFLOWS' as const,
+   WORKFLOW_UPDATES: 'WORKFLOW_UPDATES' as const,
+   CODE_SCANNING: 'CODE_SCANNING' as const,
+   COPILOT_CODE_REVIEW: 'COPILOT_CODE_REVIEW' as const,
    FILE_PATH_RESTRICTION: 'FILE_PATH_RESTRICTION' as const,
    MAX_FILE_PATH_LENGTH: 'MAX_FILE_PATH_LENGTH' as const,
    FILE_EXTENSION_RESTRICTION: 'FILE_EXTENSION_RESTRICTION' as const,
    MAX_FILE_SIZE: 'MAX_FILE_SIZE' as const,
-   WORKFLOWS: 'WORKFLOWS' as const,
-   SECRET_SCANNING: 'SECRET_SCANNING' as const,
-   WORKFLOW_UPDATES: 'WORKFLOW_UPDATES' as const,
-   CODE_SCANNING: 'CODE_SCANNING' as const,
-   COPILOT_CODE_REVIEW: 'COPILOT_CODE_REVIEW' as const
+   SECRET_SCANNING: 'SECRET_SCANNING' as const
 }
 
 export const enumRepositoryRulesetBypassActorBypassMode = {
