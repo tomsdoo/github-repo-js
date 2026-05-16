@@ -46,7 +46,7 @@ async function listNoDependabotRepos({ github }) {
  * @param {string} repositoryFullName
  */
 async function createPullRequestForRepo({ github }, repositoryFullName) {
-  const [ owner, name ] = repositoryFullName.split("/");
+  const [owner, name] = repositoryFullName.split("/");
   const repo = github.repo(owner, name);
   const { default_branch } = await repo.get();
   const branchName = `add-dependabot-config-${Date.now()}`;
@@ -60,9 +60,13 @@ The configuration checks for updates to npm dependencies on a weekly basis. You 
 For more information on dependabot and how to customize it, please refer to the [dependabot documentation](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file).
     `.trim();
   const currentTree = await repo.getTree(default_branch);
-  const alreadyExists = currentTree.tree.some(({ path }) => /^\.github\/dependabot\.ya?ml$/.test(path));
+  const alreadyExists = currentTree.tree.some(({ path }) =>
+    /^\.github\/dependabot\.ya?ml$/.test(path),
+  );
   if (alreadyExists) {
-    console.log(`Dependabot configuration already exists in ${repositoryFullName}, skipping PR creation.`);
+    console.log(
+      `Dependabot configuration already exists in ${repositoryFullName}, skipping PR creation.`,
+    );
     return;
   }
   const baseRef = await repo.getBranchReference(default_branch);
@@ -92,7 +96,9 @@ For more information on dependabot and how to customize it, please refer to the 
     if (!hasStatus(error, 422)) {
       throw error;
     }
-    await repo.patchReference(`refs/heads/${branchName}`, { sha: newCommit.sha });
+    await repo.patchReference(`refs/heads/${branchName}`, {
+      sha: newCommit.sha,
+    });
   }
 
   try {
@@ -103,9 +109,11 @@ For more information on dependabot and how to customize it, please refer to the 
       base: default_branch,
     });
     console.log(`created ${pr.html_url}`);
-  } catch(error) {
+  } catch (error) {
     if (hasStatus(error, 422)) {
-      console.log(`Pull request already exists for ${repositoryFullName}, skipping PR creation.`);
+      console.log(
+        `Pull request already exists for ${repositoryFullName}, skipping PR creation.`,
+      );
       return;
     }
     throw error;
@@ -124,6 +132,6 @@ export default async function work({ github }, repositoryFullName) {
     }
     return;
   }
-  
+
   await createPullRequestForRepo({ github }, repositoryFullName);
 }
