@@ -4045,6 +4045,33 @@ type ConnectedEvent implements Node {
   subject: ReferencedSubject!
 }
 
+"""The content warning for a repository"""
+type ContentWarning {
+  """The content warning' category. E.g. 'mis_dis_information'"""
+  category: String!
+
+  """
+  The content warning's custom sub category text. E.g. 'dangerous stuff.'
+  """
+  customSubCategory: String
+
+  """The content warning's sub category. E.g. 'medical_scientific'"""
+  subCategory: String
+
+  """
+  The content warning's sub title. E.g. 'The information contained in this page has not been verified.'
+  """
+  subTitle: String
+
+  """
+  The content warning's title. E.g. 'This page may contain false or misleading information.'
+  """
+  title: String!
+
+  """The type of content warning. E.g. 'interstitial'"""
+  type: String!
+}
+
 """The Contributing Guidelines for a repository."""
 type ContributingGuidelines {
   """The body of the Contributing Guidelines."""
@@ -23703,6 +23730,15 @@ enum ProjectV2FieldType {
 
   """Sub-issues progress"""
   SUB_ISSUES_PROGRESS
+
+  """Created"""
+  CREATED
+
+  """Updated"""
+  UPDATED
+
+  """Closed"""
+  CLOSED
 }
 
 """
@@ -31802,6 +31838,9 @@ type Repository implements Node & PackageOwner & ProjectOwner & ProjectV2Recent 
   """Indicates whether the viewer can update the topics of this repository."""
   viewerCanUpdateTopics: Boolean!
 
+  """The content warning for this repository for the viewer."""
+  viewerContentWarning: ContentWarning
+
   """The last commit email for the viewer."""
   viewerDefaultCommitEmail: String
 
@@ -33010,6 +33049,24 @@ enum RepositoryRuleType {
   TAG_NAME_PATTERN
 
   """
+  Require all changes made to a targeted branch to pass the specified workflows before they can be merged.
+  """
+  WORKFLOWS
+
+  """Workflow files cannot be modified."""
+  WORKFLOW_UPDATES
+
+  """
+  Choose which tools must provide code scanning results before the reference is updated. When configured, code scanning must be enabled and have results for both the commit and the reference being updated.
+  """
+  CODE_SCANNING
+
+  """
+  Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and their premium requests quota has not reached the limit.
+  """
+  COPILOT_CODE_REVIEW
+
+  """
   Prevent commits that include changes in specified file and folder paths from being pushed to the commit graph. This includes absolute paths that contain file names.
   """
   FILE_PATH_RESTRICTION
@@ -33029,26 +33086,8 @@ enum RepositoryRuleType {
   """
   MAX_FILE_SIZE
 
-  """
-  Require all changes made to a targeted branch to pass the specified workflows before they can be merged.
-  """
-  WORKFLOWS
-
   """Secret scanning"""
   SECRET_SCANNING
-
-  """Workflow files cannot be modified."""
-  WORKFLOW_UPDATES
-
-  """
-  Choose which tools must provide code scanning results before the reference is updated. When configured, code scanning must be enabled and have results for both the commit and the reference being updated.
-  """
-  CODE_SCANNING
-
-  """
-  Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and their premium requests quota has not reached the limit.
-  """
-  COPILOT_CODE_REVIEW
 }
 
 """A repository ruleset."""
@@ -33196,7 +33235,7 @@ type RepositoryRulesetBypassActorEdge {
 }
 
 """
-Specifies the attributes for a new or updated ruleset bypass actor. Only one of `actor_id`, `repository_role_database_id`, `organization_admin`, or `deploy_key` should be specified.
+Specifies the attributes for a new or updated ruleset bypass actor. Only one of `actor_id`, `repository_role_database_id`, `organization_admin`, `enterprise_owner`, or `deploy_key` should be specified.
 """
 input RepositoryRulesetBypassActorInput {
   """
@@ -34280,6 +34319,15 @@ input RuleParametersInput {
   """Parameters used for the `tag_name_pattern` rule type"""
   tagNamePattern: TagNamePatternParametersInput
 
+  """Parameters used for the `workflows` rule type"""
+  workflows: WorkflowsParametersInput
+
+  """Parameters used for the `code_scanning` rule type"""
+  codeScanning: CodeScanningParametersInput
+
+  """Parameters used for the `copilot_code_review` rule type"""
+  copilotCodeReview: CopilotCodeReviewParametersInput
+
   """Parameters used for the `file_path_restriction` rule type"""
   filePathRestriction: FilePathRestrictionParametersInput
 
@@ -34291,15 +34339,6 @@ input RuleParametersInput {
 
   """Parameters used for the `max_file_size` rule type"""
   maxFileSize: MaxFileSizeParametersInput
-
-  """Parameters used for the `workflows` rule type"""
-  workflows: WorkflowsParametersInput
-
-  """Parameters used for the `code_scanning` rule type"""
-  codeScanning: CodeScanningParametersInput
-
-  """Parameters used for the `copilot_code_review` rule type"""
-  copilotCodeReview: CopilotCodeReviewParametersInput
 }
 
 """Types which can have `RepositoryRule` objects."""
