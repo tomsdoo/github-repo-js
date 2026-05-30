@@ -6468,6 +6468,8 @@ export interface IssueFieldDate {
     dataType: IssueFieldDataType
     /** The issue field's description. */
     description: (Scalars['String'] | null)
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId: (Scalars['BigInt'] | null)
     /** The Node ID of the IssueFieldDate object */
     id: Scalars['ID']
     /** The issue field's name. */
@@ -6498,6 +6500,8 @@ export interface IssueFieldNumber {
     dataType: IssueFieldDataType
     /** The issue field's description. */
     description: (Scalars['String'] | null)
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId: (Scalars['BigInt'] | null)
     /** The Node ID of the IssueFieldNumber object */
     id: Scalars['ID']
     /** The issue field's name. */
@@ -6546,6 +6550,8 @@ export interface IssueFieldSingleSelect {
     dataType: IssueFieldDataType
     /** The issue field's description. */
     description: (Scalars['String'] | null)
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId: (Scalars['BigInt'] | null)
     /** The Node ID of the IssueFieldSingleSelect object */
     id: Scalars['ID']
     /** The issue field's name. */
@@ -6562,8 +6568,12 @@ export interface IssueFieldSingleSelect {
 export interface IssueFieldSingleSelectOption {
     /** The option's display color. */
     color: IssueFieldSingleSelectOptionColor
+    /** Identifies the primary key from the database. */
+    databaseId: (Scalars['Int'] | null)
     /** The option's plain-text description. */
     description: (Scalars['String'] | null)
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId: (Scalars['BigInt'] | null)
     /** The Node ID of the IssueFieldSingleSelectOption object */
     id: Scalars['ID']
     /** The option's name. */
@@ -6606,6 +6616,8 @@ export interface IssueFieldText {
     dataType: IssueFieldDataType
     /** The issue field's description. */
     description: (Scalars['String'] | null)
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId: (Scalars['BigInt'] | null)
     /** The Node ID of the IssueFieldText object */
     id: Scalars['ID']
     /** The issue field's name. */
@@ -18389,7 +18401,7 @@ export interface RepoRemoveTopicAuditEntry {
 
 
 /** The reasons a piece of content can be reported or minimized. */
-export type ReportedContentClassifiers = 'SPAM' | 'ABUSE' | 'OFF_TOPIC' | 'OUTDATED' | 'DUPLICATE' | 'RESOLVED'
+export type ReportedContentClassifiers = 'SPAM' | 'ABUSE' | 'OFF_TOPIC' | 'OUTDATED' | 'DUPLICATE' | 'RESOLVED' | 'LOW_QUALITY'
 
 
 /** A repository contains the content for a project. */
@@ -34720,6 +34732,8 @@ export interface IssueFieldCommonGenqlSelection{
     dataType?: boolean | number
     /** The issue field's description. */
     description?: boolean | number
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId?: boolean | number
     /** The issue field's name. */
     name?: boolean | number
     /** The issue field's visibility. */
@@ -34757,6 +34771,8 @@ export interface IssueFieldDateGenqlSelection{
     dataType?: boolean | number
     /** The issue field's description. */
     description?: boolean | number
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId?: boolean | number
     /** The Node ID of the IssueFieldDate object */
     id?: boolean | number
     /** The issue field's name. */
@@ -34789,6 +34805,8 @@ export interface IssueFieldNumberGenqlSelection{
     dataType?: boolean | number
     /** The issue field's description. */
     description?: boolean | number
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId?: boolean | number
     /** The Node ID of the IssueFieldNumber object */
     id?: boolean | number
     /** The issue field's name. */
@@ -34844,6 +34862,8 @@ export interface IssueFieldSingleSelectGenqlSelection{
     dataType?: boolean | number
     /** The issue field's description. */
     description?: boolean | number
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId?: boolean | number
     /** The Node ID of the IssueFieldSingleSelect object */
     id?: boolean | number
     /** The issue field's name. */
@@ -34861,8 +34881,12 @@ export interface IssueFieldSingleSelectGenqlSelection{
 export interface IssueFieldSingleSelectOptionGenqlSelection{
     /** The option's display color. */
     color?: boolean | number
+    /** Identifies the primary key from the database. */
+    databaseId?: boolean | number
     /** The option's plain-text description. */
     description?: boolean | number
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId?: boolean | number
     /** The Node ID of the IssueFieldSingleSelectOption object */
     id?: boolean | number
     /** The option's name. */
@@ -34915,6 +34939,8 @@ export interface IssueFieldTextGenqlSelection{
     dataType?: boolean | number
     /** The issue field's description. */
     description?: boolean | number
+    /** Identifies the primary key from the database as a BigInt. */
+    fullDatabaseId?: boolean | number
     /** The Node ID of the IssueFieldText object */
     id?: boolean | number
     /** The issue field's name. */
@@ -70340,7 +70366,8 @@ export const enumReportedContentClassifiers = {
    OFF_TOPIC: 'OFF_TOPIC' as const,
    OUTDATED: 'OUTDATED' as const,
    DUPLICATE: 'DUPLICATE' as const,
-   RESOLVED: 'RESOLVED' as const
+   RESOLVED: 'RESOLVED' as const,
+   LOW_QUALITY: 'LOW_QUALITY' as const
 }
 
 export const enumRepositoryAffiliation = {
