@@ -6438,6 +6438,8 @@ export interface IssueFieldAddedEvent {
     id: Scalars['ID']
     /** The issue field added. */
     issueField: (IssueFields | null)
+    /** The selected options for option-backed fields; single-select returns one option and multi-select returns many. */
+    options: (IssueFieldTimelineOption[] | null)
     /** The value of the added field. */
     value: (Scalars['String'] | null)
     __typename: 'IssueFieldAddedEvent'
@@ -6456,10 +6458,14 @@ export interface IssueFieldChangedEvent {
     issueField: (IssueFields | null)
     /** The new color if it is a single-select field. */
     newColor: (Scalars['String'] | null)
+    /** The new options for option-backed fields; single-select returns one option and multi-select returns many. */
+    newOptions: (IssueFieldTimelineOption[] | null)
     /** The new value of the field. */
     newValue: (Scalars['String'] | null)
     /** The previous color if it was a single-select field. */
     previousColor: (Scalars['String'] | null)
+    /** The previous options for option-backed fields; single-select returns one option and multi-select returns many. */
+    previousOptions: (IssueFieldTimelineOption[] | null)
     /** The previous value of the field. */
     previousValue: (Scalars['String'] | null)
     __typename: 'IssueFieldChangedEvent'
@@ -6588,6 +6594,8 @@ export interface IssueFieldRemovedEvent {
     id: Scalars['ID']
     /** The issue field removed. */
     issueField: (IssueFields | null)
+    /** The removed options for option-backed fields; single-select returns one option and multi-select returns many. */
+    options: (IssueFieldTimelineOption[] | null)
     __typename: 'IssueFieldRemovedEvent'
 }
 
@@ -6687,6 +6695,16 @@ export interface IssueFieldTextValue {
     /** Value of the field. */
     value: Scalars['String']
     __typename: 'IssueFieldTextValue'
+}
+
+
+/** Represents a selected option for a timeline issue field event. */
+export interface IssueFieldTimelineOption {
+    /** The option color. */
+    color: (Scalars['String'] | null)
+    /** The option name. */
+    name: Scalars['String']
+    __typename: 'IssueFieldTimelineOption'
 }
 
 
@@ -8347,7 +8365,7 @@ export interface Mutation {
     addProjectV2DraftIssue: (AddProjectV2DraftIssuePayload | null)
     /** Links an existing content instance to a Project. */
     addProjectV2ItemById: (AddProjectV2ItemByIdPayload | null)
-    /** Add users to the pull request creation cap bypass list. Bypassed users can create pull requests regardless of the configured cap. Only repository admins can manage the bypass list. You can add a maximum of 100 users per request. The bypass list can only hold a maximum of 100 users. */
+    /** Add users to the pull request creation cap bypass list. Bypassed users can create pull requests regardless of the configured cap. Only users with maintainer permissions can manage the bypass list. You can add a maximum of 100 users per request. The bypass list can only hold a maximum of 100 users. */
     addPullRequestCreationCapBypassUsers: (AddPullRequestCreationCapBypassUsersPayload | null)
     /** Adds a review to a Pull Request. */
     addPullRequestReview: (AddPullRequestReviewPayload | null)
@@ -8693,7 +8711,7 @@ export interface Mutation {
     removeLabelsFromLabelable: (RemoveLabelsFromLabelablePayload | null)
     /** Removes outside collaborator from all repositories in an organization. */
     removeOutsideCollaborator: (RemoveOutsideCollaboratorPayload | null)
-    /** Remove users from the pull request creation cap bypass list. Only repository admins can manage the bypass list. */
+    /** Remove users from the pull request creation cap bypass list. Only users with maintainer permissions can manage the bypass list. */
     removePullRequestCreationCapBypassUsers: (RemovePullRequestCreationCapBypassUsersPayload | null)
     /** Removes a reaction from a subject. */
     removeReaction: (RemoveReactionPayload | null)
@@ -18676,7 +18694,7 @@ export interface Repository {
     projectsV2: ProjectV2Connection
     /** Returns a single pull request from the current repository by number. */
     pullRequest: (PullRequest | null)
-    /** A list of users who are exempt from the pull request creation cap on this repository. Only visible to repository admins. */
+    /** The pull request creation cap configuration for this repository. Only visible to repository maintainers and administrators. */
     pullRequestCreationCapConfig: (PullRequestCreationCapConfig | null)
     /** The policy controlling who can create pull requests in this repository. */
     pullRequestCreationPolicy: (PullRequestCreationPolicy | null)
@@ -34803,6 +34821,8 @@ export interface IssueFieldAddedEventGenqlSelection{
     id?: boolean | number
     /** The issue field added. */
     issueField?: IssueFieldsGenqlSelection
+    /** The selected options for option-backed fields; single-select returns one option and multi-select returns many. */
+    options?: IssueFieldTimelineOptionGenqlSelection
     /** The value of the added field. */
     value?: boolean | number
     __typename?: boolean | number
@@ -34822,10 +34842,14 @@ export interface IssueFieldChangedEventGenqlSelection{
     issueField?: IssueFieldsGenqlSelection
     /** The new color if it is a single-select field. */
     newColor?: boolean | number
+    /** The new options for option-backed fields; single-select returns one option and multi-select returns many. */
+    newOptions?: IssueFieldTimelineOptionGenqlSelection
     /** The new value of the field. */
     newValue?: boolean | number
     /** The previous color if it was a single-select field. */
     previousColor?: boolean | number
+    /** The previous options for option-backed fields; single-select returns one option and multi-select returns many. */
+    previousOptions?: IssueFieldTimelineOptionGenqlSelection
     /** The previous value of the field. */
     previousValue?: boolean | number
     __typename?: boolean | number
@@ -34999,6 +35023,8 @@ export interface IssueFieldRemovedEventGenqlSelection{
     id?: boolean | number
     /** The issue field removed. */
     issueField?: IssueFieldsGenqlSelection
+    /** The removed options for option-backed fields; single-select returns one option and multi-select returns many. */
+    options?: IssueFieldTimelineOptionGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -35110,6 +35136,17 @@ export interface IssueFieldTextValueGenqlSelection{
     id?: boolean | number
     /** Value of the field. */
     value?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+
+/** Represents a selected option for a timeline issue field event. */
+export interface IssueFieldTimelineOptionGenqlSelection{
+    /** The option color. */
+    color?: boolean | number
+    /** The option name. */
+    name?: boolean | number
     __typename?: boolean | number
     __scalar?: boolean | number
 }
@@ -37389,7 +37426,7 @@ export interface MutationGenqlSelection{
     addProjectV2ItemById?: (AddProjectV2ItemByIdPayloadGenqlSelection & { __args: {
     /** Parameters for AddProjectV2ItemById */
     input: AddProjectV2ItemByIdInput} })
-    /** Add users to the pull request creation cap bypass list. Bypassed users can create pull requests regardless of the configured cap. Only repository admins can manage the bypass list. You can add a maximum of 100 users per request. The bypass list can only hold a maximum of 100 users. */
+    /** Add users to the pull request creation cap bypass list. Bypassed users can create pull requests regardless of the configured cap. Only users with maintainer permissions can manage the bypass list. You can add a maximum of 100 users per request. The bypass list can only hold a maximum of 100 users. */
     addPullRequestCreationCapBypassUsers?: (AddPullRequestCreationCapBypassUsersPayloadGenqlSelection & { __args: {
     /** Parameters for AddPullRequestCreationCapBypassUsers */
     input: AddPullRequestCreationCapBypassUsersInput} })
@@ -38007,7 +38044,7 @@ export interface MutationGenqlSelection{
     removeOutsideCollaborator?: (RemoveOutsideCollaboratorPayloadGenqlSelection & { __args: {
     /** Parameters for RemoveOutsideCollaborator */
     input: RemoveOutsideCollaboratorInput} })
-    /** Remove users from the pull request creation cap bypass list. Only repository admins can manage the bypass list. */
+    /** Remove users from the pull request creation cap bypass list. Only users with maintainer permissions can manage the bypass list. */
     removePullRequestCreationCapBypassUsers?: (RemovePullRequestCreationCapBypassUsersPayloadGenqlSelection & { __args: {
     /** Parameters for RemovePullRequestCreationCapBypassUsers */
     input: RemovePullRequestCreationCapBypassUsersInput} })
@@ -51413,7 +51450,7 @@ export interface RepositoryGenqlSelection{
     pullRequest?: (PullRequestGenqlSelection & { __args: {
     /** The number for the pull request to be returned. */
     number: Scalars['Int']} })
-    /** A list of users who are exempt from the pull request creation cap on this repository. Only visible to repository admins. */
+    /** The pull request creation cap configuration for this repository. Only visible to repository maintainers and administrators. */
     pullRequestCreationCapConfig?: PullRequestCreationCapConfigGenqlSelection
     /** The policy controlling who can create pull requests in this repository. */
     pullRequestCreationPolicy?: boolean | number
@@ -63860,6 +63897,14 @@ export interface _EntityGenqlSelection{
     export const isIssueFieldTextValue = (obj?: { __typename?: any } | null): obj is IssueFieldTextValue => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isIssueFieldTextValue"')
       return IssueFieldTextValue_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
+    const IssueFieldTimelineOption_possibleTypes: string[] = ['IssueFieldTimelineOption']
+    export const isIssueFieldTimelineOption = (obj?: { __typename?: any } | null): obj is IssueFieldTimelineOption => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isIssueFieldTimelineOption"')
+      return IssueFieldTimelineOption_possibleTypes.includes(obj.__typename)
     }
     
 
