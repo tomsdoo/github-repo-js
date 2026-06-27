@@ -13394,6 +13394,11 @@ type IssueFieldAddedEvent implements Node {
   """The issue field added."""
   issueField: IssueFields
 
+  """
+  The selected options for option-backed fields; single-select returns one option and multi-select returns many.
+  """
+  options: [IssueFieldTimelineOption!]
+
   """The value of the added field."""
   value: String
 }
@@ -13415,11 +13420,21 @@ type IssueFieldChangedEvent implements Node {
   """The new color if it is a single-select field."""
   newColor: String
 
+  """
+  The new options for option-backed fields; single-select returns one option and multi-select returns many.
+  """
+  newOptions: [IssueFieldTimelineOption!]
+
   """The new value of the field."""
   newValue: String
 
   """The previous color if it was a single-select field."""
   previousColor: String
+
+  """
+  The previous options for option-backed fields; single-select returns one option and multi-select returns many.
+  """
+  previousOptions: [IssueFieldTimelineOption!]
 
   """The previous value of the field."""
   previousValue: String
@@ -13635,6 +13650,11 @@ type IssueFieldRemovedEvent implements Node {
 
   """The issue field removed."""
   issueField: IssueFields
+
+  """
+  The removed options for option-backed fields; single-select returns one option and multi-select returns many.
+  """
+  options: [IssueFieldTimelineOption!]
 }
 
 """Represents a single select issue field."""
@@ -13790,6 +13810,15 @@ type IssueFieldTextValue implements IssueFieldValueCommon & Node {
 
   """Value of the field."""
   value: String!
+}
+
+"""Represents a selected option for a timeline issue field event."""
+type IssueFieldTimelineOption {
+  """The option color."""
+  color: String
+
+  """The option name."""
+  name: String!
 }
 
 """Issue field values"""
@@ -16651,7 +16680,7 @@ type Mutation {
   ): AddProjectV2ItemByIdPayload
 
   """
-  Add users to the pull request creation cap bypass list. Bypassed users can create pull requests regardless of the configured cap. Only repository admins can manage the bypass list. You can add a maximum of 100 users per request. The bypass list can only hold a maximum of 100 users.
+  Add users to the pull request creation cap bypass list. Bypassed users can create pull requests regardless of the configured cap. Only users with maintainer permissions can manage the bypass list. You can add a maximum of 100 users per request. The bypass list can only hold a maximum of 100 users.
   """
   addPullRequestCreationCapBypassUsers(
     """Parameters for AddPullRequestCreationCapBypassUsers"""
@@ -17501,7 +17530,7 @@ type Mutation {
   ): RemoveOutsideCollaboratorPayload
 
   """
-  Remove users from the pull request creation cap bypass list. Only repository admins can manage the bypass list.
+  Remove users from the pull request creation cap bypass list. Only users with maintainer permissions can manage the bypass list.
   """
   removePullRequestCreationCapBypassUsers(
     """Parameters for RemovePullRequestCreationCapBypassUsers"""
@@ -31954,7 +31983,7 @@ type Repository implements Node & PackageOwner & ProjectOwner & ProjectV2Recent 
   ): PullRequest
 
   """
-  A list of users who are exempt from the pull request creation cap on this repository. Only visible to repository admins.
+  The pull request creation cap configuration for this repository. Only visible to repository maintainers and administrators.
   """
   pullRequestCreationCapConfig: PullRequestCreationCapConfig
 
