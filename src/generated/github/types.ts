@@ -43953,6 +43953,9 @@ export default {
             "pullRequestCreationPolicy": [
                 1081
             ],
+            "issueCreationPolicy": [
+                651
+            ],
             "__typename": [
                 1480
             ]
