@@ -4323,6 +4323,16 @@ export interface DismissRepositoryVulnerabilityAlertPayload {
 }
 
 
+/** Specify people, teams, or apps allowed to dismiss pull request reviews. */
+export interface DismissalRestriction {
+    /** Specify people, teams, or apps allowed to dismiss pull request reviews. */
+    allowedActors: (Scalars['ID'][] | null)
+    /** Whether to restrict review dismissal to specific actors. */
+    enabled: Scalars['Boolean']
+    __typename: 'DismissalRestriction'
+}
+
+
 /** A draft issue within a project. */
 export interface DraftIssue {
     /** A list of users to assigned to this draft issue. */
@@ -15101,6 +15111,8 @@ export interface PullRequestParameters {
     allowedMergeMethods: (PullRequestAllowedMergeMethods[] | null)
     /** New, reviewable commits pushed will dismiss previous pull request review approvals. */
     dismissStaleReviewsOnPush: Scalars['Boolean']
+    /** Specify people, teams, or apps allowed to dismiss pull request reviews. */
+    dismissalRestriction: (DismissalRestriction | null)
     /** Require an approving review in pull requests that modify files that have a designated code owner. */
     requireCodeOwnerReview: Scalars['Boolean']
     /** Whether the most recent reviewable push must be approved by someone other than the person who pushed it. */
@@ -15584,7 +15596,7 @@ export interface PullRequestTimelineItemsEdge {
 
 
 /** The possible item types found in a timeline. */
-export type PullRequestTimelineItemsItemType = 'PULL_REQUEST_COMMIT' | 'PULL_REQUEST_COMMIT_COMMENT_THREAD' | 'PULL_REQUEST_REVIEW' | 'PULL_REQUEST_REVIEW_THREAD' | 'PULL_REQUEST_REVISION_MARKER' | 'ADDED_TO_MERGE_QUEUE_EVENT' | 'AUTOMATIC_BASE_CHANGE_FAILED_EVENT' | 'AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT' | 'AUTO_MERGE_DISABLED_EVENT' | 'AUTO_MERGE_ENABLED_EVENT' | 'AUTO_REBASE_ENABLED_EVENT' | 'AUTO_SQUASH_ENABLED_EVENT' | 'BASE_REF_CHANGED_EVENT' | 'BASE_REF_FORCE_PUSHED_EVENT' | 'BASE_REF_DELETED_EVENT' | 'CONVERT_TO_DRAFT_EVENT' | 'DEPLOYED_EVENT' | 'DEPLOYMENT_ENVIRONMENT_CHANGED_EVENT' | 'HEAD_REF_DELETED_EVENT' | 'HEAD_REF_FORCE_PUSHED_EVENT' | 'HEAD_REF_RESTORED_EVENT' | 'MERGED_EVENT' | 'READY_FOR_REVIEW_EVENT' | 'REMOVED_FROM_MERGE_QUEUE_EVENT' | 'REVIEW_DISMISSED_EVENT' | 'REVIEW_REQUESTED_EVENT' | 'REVIEW_REQUEST_REMOVED_EVENT' | 'ISSUE_COMMENT' | 'CROSS_REFERENCED_EVENT' | 'ADDED_TO_PROJECT_EVENT' | 'ADDED_TO_PROJECT_V2_EVENT' | 'ASSIGNED_EVENT' | 'CLOSED_EVENT' | 'COMMENT_DELETED_EVENT' | 'CONNECTED_EVENT' | 'CONVERTED_FROM_DRAFT_EVENT' | 'CONVERTED_NOTE_TO_ISSUE_EVENT' | 'CONVERTED_TO_DISCUSSION_EVENT' | 'DEMILESTONED_EVENT' | 'DISCONNECTED_EVENT' | 'LABELED_EVENT' | 'LOCKED_EVENT' | 'MARKED_AS_DUPLICATE_EVENT' | 'MENTIONED_EVENT' | 'MILESTONED_EVENT' | 'MOVED_COLUMNS_IN_PROJECT_EVENT' | 'PINNED_EVENT' | 'PROJECT_V2_ITEM_STATUS_CHANGED_EVENT' | 'REFERENCED_EVENT' | 'REMOVED_FROM_PROJECT_EVENT' | 'REMOVED_FROM_PROJECT_V2_EVENT' | 'RENAMED_TITLE_EVENT' | 'REOPENED_EVENT' | 'SUBSCRIBED_EVENT' | 'TRANSFERRED_EVENT' | 'UNASSIGNED_EVENT' | 'UNLABELED_EVENT' | 'UNLOCKED_EVENT' | 'USER_BLOCKED_EVENT' | 'UNMARKED_AS_DUPLICATE_EVENT' | 'UNPINNED_EVENT' | 'UNSUBSCRIBED_EVENT' | 'ISSUE_COMMENT_PINNED_EVENT' | 'ISSUE_COMMENT_UNPINNED_EVENT' | 'ISSUE_TYPE_ADDED_EVENT' | 'ISSUE_TYPE_REMOVED_EVENT' | 'ISSUE_TYPE_CHANGED_EVENT' | 'ISSUE_FIELD_ADDED_EVENT' | 'ISSUE_FIELD_REMOVED_EVENT' | 'ISSUE_FIELD_CHANGED_EVENT' | 'SUB_ISSUE_ADDED_EVENT' | 'SUB_ISSUE_REMOVED_EVENT' | 'PARENT_ISSUE_ADDED_EVENT' | 'PARENT_ISSUE_REMOVED_EVENT' | 'BLOCKED_BY_ADDED_EVENT' | 'BLOCKING_ADDED_EVENT' | 'BLOCKED_BY_REMOVED_EVENT' | 'BLOCKING_REMOVED_EVENT'
+export type PullRequestTimelineItemsItemType = 'PULL_REQUEST_COMMIT' | 'PULL_REQUEST_COMMIT_COMMENT_THREAD' | 'PULL_REQUEST_REVIEW' | 'PULL_REQUEST_REVIEW_THREAD' | 'PULL_REQUEST_REVISION_MARKER' | 'ADDED_TO_MERGE_QUEUE_EVENT' | 'ARCHIVED_EVENT' | 'AUTOMATIC_BASE_CHANGE_FAILED_EVENT' | 'AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT' | 'AUTO_MERGE_DISABLED_EVENT' | 'AUTO_MERGE_ENABLED_EVENT' | 'AUTO_REBASE_ENABLED_EVENT' | 'AUTO_SQUASH_ENABLED_EVENT' | 'BASE_REF_CHANGED_EVENT' | 'BASE_REF_FORCE_PUSHED_EVENT' | 'BASE_REF_DELETED_EVENT' | 'CONVERT_TO_DRAFT_EVENT' | 'DEPLOYED_EVENT' | 'DEPLOYMENT_ENVIRONMENT_CHANGED_EVENT' | 'HEAD_REF_DELETED_EVENT' | 'HEAD_REF_FORCE_PUSHED_EVENT' | 'HEAD_REF_RESTORED_EVENT' | 'MERGED_EVENT' | 'READY_FOR_REVIEW_EVENT' | 'REMOVED_FROM_MERGE_QUEUE_EVENT' | 'REVIEW_DISMISSED_EVENT' | 'REVIEW_REQUESTED_EVENT' | 'REVIEW_REQUEST_REMOVED_EVENT' | 'UNARCHIVED_EVENT' | 'ISSUE_COMMENT' | 'CROSS_REFERENCED_EVENT' | 'ADDED_TO_PROJECT_EVENT' | 'ADDED_TO_PROJECT_V2_EVENT' | 'ASSIGNED_EVENT' | 'CLOSED_EVENT' | 'COMMENT_DELETED_EVENT' | 'CONNECTED_EVENT' | 'CONVERTED_FROM_DRAFT_EVENT' | 'CONVERTED_NOTE_TO_ISSUE_EVENT' | 'CONVERTED_TO_DISCUSSION_EVENT' | 'DEMILESTONED_EVENT' | 'DISCONNECTED_EVENT' | 'LABELED_EVENT' | 'LOCKED_EVENT' | 'MARKED_AS_DUPLICATE_EVENT' | 'MENTIONED_EVENT' | 'MILESTONED_EVENT' | 'MOVED_COLUMNS_IN_PROJECT_EVENT' | 'PINNED_EVENT' | 'PROJECT_V2_ITEM_STATUS_CHANGED_EVENT' | 'REFERENCED_EVENT' | 'REMOVED_FROM_PROJECT_EVENT' | 'REMOVED_FROM_PROJECT_V2_EVENT' | 'RENAMED_TITLE_EVENT' | 'REOPENED_EVENT' | 'SUBSCRIBED_EVENT' | 'TRANSFERRED_EVENT' | 'UNASSIGNED_EVENT' | 'UNLABELED_EVENT' | 'UNLOCKED_EVENT' | 'USER_BLOCKED_EVENT' | 'UNMARKED_AS_DUPLICATE_EVENT' | 'UNPINNED_EVENT' | 'UNSUBSCRIBED_EVENT' | 'ISSUE_COMMENT_PINNED_EVENT' | 'ISSUE_COMMENT_UNPINNED_EVENT' | 'ISSUE_TYPE_ADDED_EVENT' | 'ISSUE_TYPE_REMOVED_EVENT' | 'ISSUE_TYPE_CHANGED_EVENT' | 'ISSUE_FIELD_ADDED_EVENT' | 'ISSUE_FIELD_REMOVED_EVENT' | 'ISSUE_FIELD_CHANGED_EVENT' | 'SUB_ISSUE_ADDED_EVENT' | 'SUB_ISSUE_REMOVED_EVENT' | 'PARENT_ISSUE_ADDED_EVENT' | 'PARENT_ISSUE_REMOVED_EVENT' | 'BLOCKED_BY_ADDED_EVENT' | 'BLOCKING_ADDED_EVENT' | 'BLOCKED_BY_REMOVED_EVENT' | 'BLOCKING_REMOVED_EVENT'
 
 
 /** The possible target states when updating a pull request. */
@@ -24374,8 +24386,8 @@ export interface AddAssigneesToAssignableInput {
 clientMutationId?: (Scalars['String'] | null),
 /** The id of the assignable object to add assignees to. */
 assignableId: Scalars['ID'],
-/** The ids of actors (users or bots) to add as assignees. */
-assigneeIds: Scalars['ID'][],
+/** The ids of actors (users or bots) to add as assignees. Mutually exclusive with `assignees`. */
+assigneeIds?: (Scalars['ID'][] | null),
 /** Configuration for assigning Copilot to this issue. */
 agentAssignment?: (AgentAssignmentInput | null)}
 
@@ -31369,6 +31381,25 @@ export interface DismissRepositoryVulnerabilityAlertPayloadGenqlSelection{
     __typename?: boolean | number
     __scalar?: boolean | number
 }
+
+
+/** Specify people, teams, or apps allowed to dismiss pull request reviews. */
+export interface DismissalRestrictionGenqlSelection{
+    /** Specify people, teams, or apps allowed to dismiss pull request reviews. */
+    allowedActors?: boolean | number
+    /** Whether to restrict review dismissal to specific actors. */
+    enabled?: boolean | number
+    __typename?: boolean | number
+    __scalar?: boolean | number
+}
+
+
+/** Specify people, teams, or apps allowed to dismiss pull request reviews. */
+export interface DismissalRestrictionInput {
+/** Specify people, teams, or apps allowed to dismiss pull request reviews. */
+allowedActors?: (Scalars['ID'][] | null),
+/** Whether to restrict review dismissal to specific actors. */
+enabled: Scalars['Boolean']}
 
 
 /** A draft issue within a project. */
@@ -46672,6 +46703,8 @@ export interface PullRequestParametersGenqlSelection{
     allowedMergeMethods?: boolean | number
     /** New, reviewable commits pushed will dismiss previous pull request review approvals. */
     dismissStaleReviewsOnPush?: boolean | number
+    /** Specify people, teams, or apps allowed to dismiss pull request reviews. */
+    dismissalRestriction?: DismissalRestrictionGenqlSelection
     /** Require an approving review in pull requests that modify files that have a designated code owner. */
     requireCodeOwnerReview?: boolean | number
     /** Whether the most recent reviewable push must be approved by someone other than the person who pushed it. */
@@ -46693,6 +46726,8 @@ export interface PullRequestParametersInput {
 allowedMergeMethods?: (PullRequestAllowedMergeMethods[] | null),
 /** New, reviewable commits pushed will dismiss previous pull request review approvals. */
 dismissStaleReviewsOnPush: Scalars['Boolean'],
+/** Specify people, teams, or apps allowed to dismiss pull request reviews. */
+dismissalRestriction?: (DismissalRestrictionInput | null),
 /** Require an approving review in pull requests that modify files that have a designated code owner. */
 requireCodeOwnerReview: Scalars['Boolean'],
 /** Whether the most recent reviewable push must be approved by someone other than the person who pushed it. */
@@ -62903,6 +62938,14 @@ export interface _EntityGenqlSelection{
     
 
 
+    const DismissalRestriction_possibleTypes: string[] = ['DismissalRestriction']
+    export const isDismissalRestriction = (obj?: { __typename?: any } | null): obj is DismissalRestriction => {
+      if (!obj?.__typename) throw new Error('__typename is missing in "isDismissalRestriction"')
+      return DismissalRestriction_possibleTypes.includes(obj.__typename)
+    }
+    
+
+
     const DraftIssue_possibleTypes: string[] = ['DraftIssue']
     export const isDraftIssue = (obj?: { __typename?: any } | null): obj is DraftIssue => {
       if (!obj?.__typename) throw new Error('__typename is missing in "isDraftIssue"')
@@ -70531,6 +70574,7 @@ export const enumPullRequestTimelineItemsItemType = {
    PULL_REQUEST_REVIEW_THREAD: 'PULL_REQUEST_REVIEW_THREAD' as const,
    PULL_REQUEST_REVISION_MARKER: 'PULL_REQUEST_REVISION_MARKER' as const,
    ADDED_TO_MERGE_QUEUE_EVENT: 'ADDED_TO_MERGE_QUEUE_EVENT' as const,
+   ARCHIVED_EVENT: 'ARCHIVED_EVENT' as const,
    AUTOMATIC_BASE_CHANGE_FAILED_EVENT: 'AUTOMATIC_BASE_CHANGE_FAILED_EVENT' as const,
    AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT: 'AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT' as const,
    AUTO_MERGE_DISABLED_EVENT: 'AUTO_MERGE_DISABLED_EVENT' as const,
@@ -70552,6 +70596,7 @@ export const enumPullRequestTimelineItemsItemType = {
    REVIEW_DISMISSED_EVENT: 'REVIEW_DISMISSED_EVENT' as const,
    REVIEW_REQUESTED_EVENT: 'REVIEW_REQUESTED_EVENT' as const,
    REVIEW_REQUEST_REMOVED_EVENT: 'REVIEW_REQUEST_REMOVED_EVENT' as const,
+   UNARCHIVED_EVENT: 'UNARCHIVED_EVENT' as const,
    ISSUE_COMMENT: 'ISSUE_COMMENT' as const,
    CROSS_REFERENCED_EVENT: 'CROSS_REFERENCED_EVENT' as const,
    ADDED_TO_PROJECT_EVENT: 'ADDED_TO_PROJECT_EVENT' as const,
