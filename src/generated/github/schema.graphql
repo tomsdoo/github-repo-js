@@ -204,8 +204,10 @@ input AddAssigneesToAssignableInput {
   """The id of the assignable object to add assignees to."""
   assignableId: ID!
 
-  """The ids of actors (users or bots) to add as assignees."""
-  assigneeIds: [ID!]!
+  """
+  The ids of actors (users or bots) to add as assignees. Mutually exclusive with `assignees`.
+  """
+  assigneeIds: [ID!]
 
   """Configuration for assigning Copilot to this issue."""
   agentAssignment: AgentAssignmentInput
@@ -8437,6 +8439,32 @@ type DismissRepositoryVulnerabilityAlertPayload {
 
   """The Dependabot alert that was dismissed"""
   repositoryVulnerabilityAlert: RepositoryVulnerabilityAlert
+}
+
+"""
+Specify people, teams, or apps allowed to dismiss pull request reviews.
+"""
+type DismissalRestriction {
+  """
+  Specify people, teams, or apps allowed to dismiss pull request reviews.
+  """
+  allowedActors: [ID!]
+
+  """Whether to restrict review dismissal to specific actors."""
+  enabled: Boolean!
+}
+
+"""
+Specify people, teams, or apps allowed to dismiss pull request reviews.
+"""
+input DismissalRestrictionInput {
+  """
+  Specify people, teams, or apps allowed to dismiss pull request reviews.
+  """
+  allowedActors: [ID!]
+
+  """Whether to restrict review dismissal to specific actors."""
+  enabled: Boolean!
 }
 
 """A draft issue within a project."""
@@ -26663,6 +26691,11 @@ type PullRequestParameters {
   dismissStaleReviewsOnPush: Boolean!
 
   """
+  Specify people, teams, or apps allowed to dismiss pull request reviews.
+  """
+  dismissalRestriction: DismissalRestriction
+
+  """
   Require an approving review in pull requests that modify files that have a designated code owner.
   """
   requireCodeOwnerReview: Boolean!
@@ -26701,6 +26734,11 @@ input PullRequestParametersInput {
   New, reviewable commits pushed will dismiss previous pull request review approvals.
   """
   dismissStaleReviewsOnPush: Boolean!
+
+  """
+  Specify people, teams, or apps allowed to dismiss pull request reviews.
+  """
+  dismissalRestriction: DismissalRestrictionInput
 
   """
   Require an approving review in pull requests that modify files that have a designated code owner.
@@ -27548,6 +27586,9 @@ enum PullRequestTimelineItemsItemType {
   """Represents an 'added_to_merge_queue' event on a given pull request."""
   ADDED_TO_MERGE_QUEUE_EVENT
 
+  """Represents an 'archived' event on a given pull request."""
+  ARCHIVED_EVENT
+
   """
   Represents a 'automatic_base_change_failed' event on a given pull request.
   """
@@ -27620,6 +27661,9 @@ enum PullRequestTimelineItemsItemType {
 
   """Represents an 'review_request_removed' event on a given pull request."""
   REVIEW_REQUEST_REMOVED_EVENT
+
+  """Represents an 'unarchived' event on a given pull request."""
+  UNARCHIVED_EVENT
 
   """Represents a comment on an Issue."""
   ISSUE_COMMENT
