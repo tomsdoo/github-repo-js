@@ -8855,7 +8855,7 @@ export interface Mutation {
     removeEnterpriseAdmin: (RemoveEnterpriseAdminPayload | null)
     /** Removes the identity provider from an enterprise. Owners of enterprises both with and without Enterprise Managed Users may use this mutation. */
     removeEnterpriseIdentityProvider: (RemoveEnterpriseIdentityProviderPayload | null)
-    /** Completely removes a user from the enterprise */
+    /** Completely removes a user from the enterprise asynchronously. */
     removeEnterpriseMember: (RemoveEnterpriseMemberPayload | null)
     /** Removes an organization from the enterprise */
     removeEnterpriseOrganization: (RemoveEnterpriseOrganizationPayload | null)
@@ -38744,7 +38744,7 @@ export interface MutationGenqlSelection{
     removeEnterpriseIdentityProvider?: (RemoveEnterpriseIdentityProviderPayloadGenqlSelection & { __args: {
     /** Parameters for RemoveEnterpriseIdentityProvider */
     input: RemoveEnterpriseIdentityProviderInput} })
-    /** Completely removes a user from the enterprise */
+    /** Completely removes a user from the enterprise asynchronously. */
     removeEnterpriseMember?: (RemoveEnterpriseMemberPayloadGenqlSelection & { __args: {
     /** Parameters for RemoveEnterpriseMember */
     input: RemoveEnterpriseMemberInput} })
