@@ -4453,6 +4453,8 @@ export interface Enterprise {
     enterpriseTeams: EnterpriseTeamConnection
     /** The Node ID of the Enterprise object */
     id: Scalars['ID']
+    /** Innersource security vulnerabilities scoped to this enterprise. */
+    innersourceVulnerabilities: SecurityVulnerabilityConnection
     /** The location of the enterprise. */
     location: (Scalars['String'] | null)
     /** A list of users who are members of this enterprise. */
@@ -12273,6 +12275,8 @@ export interface Organization {
     hasSponsorsListing: Scalars['Boolean']
     /** The Node ID of the Organization object */
     id: Scalars['ID']
+    /** Innersource security vulnerabilities scoped to this organization. */
+    innersourceVulnerabilities: SecurityVulnerabilityConnection
     /** The interaction ability settings for this organization. */
     interactionAbility: (RepositoryInteractionAbility | null)
     /** The setting value for whether the organization has an IP allow list enabled. */
@@ -12325,6 +12329,8 @@ export interface Organization {
     pendingMembers: UserConnection
     /** A list of repositories and gists this profile owner can pin to their profile. */
     pinnableItems: PinnableItemConnection
+    /** An ordered list of issue fields pinned to issues when no type is selected. */
+    pinnedIssueFields: (IssueFieldsConnection | null)
     /** A list of repositories and gists this profile owner has pinned to their profile */
     pinnedItems: PinnableItemConnection
     /** Returns how many more items this profile owner can pin to their profile. */
@@ -14066,6 +14072,10 @@ export interface ProjectV2Field {
     databaseId: (Scalars['Int'] | null)
     /** The Node ID of the ProjectV2Field object */
     id: Scalars['ID']
+    /** Returns true if this field is associated with an organization issue field */
+    isIssueField: Scalars['Boolean']
+    /** The organization issue field associated with this project field, if any */
+    issueField: (IssueFields | null)
     /** The project field's name. */
     name: Scalars['String']
     /** The project that contains this field. */
@@ -14507,6 +14517,8 @@ export interface ProjectV2IterationField {
     databaseId: (Scalars['Int'] | null)
     /** The Node ID of the ProjectV2IterationField object */
     id: Scalars['ID']
+    /** Returns true if this field is associated with an organization issue field */
+    isIssueField: Scalars['Boolean']
     /** The project field's name. */
     name: Scalars['String']
     /** The project that contains this field. */
@@ -14557,6 +14569,10 @@ export interface ProjectV2MultiSelectField {
     databaseId: (Scalars['Int'] | null)
     /** The Node ID of the ProjectV2MultiSelectField object */
     id: Scalars['ID']
+    /** Returns true if this field is associated with an organization issue field */
+    isIssueField: Scalars['Boolean']
+    /** The organization issue field associated with this project field, if any */
+    issueField: (IssueFields | null)
     /** Options for the multi select field */
     multiSelectOptions: ProjectV2MultiSelectFieldOption[]
     /** The project field's name. */
@@ -14617,6 +14633,10 @@ export interface ProjectV2SingleSelectField {
     databaseId: (Scalars['Int'] | null)
     /** The Node ID of the ProjectV2SingleSelectField object */
     id: Scalars['ID']
+    /** Returns true if this field is associated with an organization issue field */
+    isIssueField: Scalars['Boolean']
+    /** The organization issue field associated with this project field, if any */
+    issueField: (IssueFields | null)
     /** The project field's name. */
     name: Scalars['String']
     /** Options for the single select field */
@@ -32102,6 +32122,24 @@ export interface EnterpriseGenqlSelection{
     last?: (Scalars['Int'] | null)} })
     /** The Node ID of the Enterprise object */
     id?: boolean | number
+    /** Innersource security vulnerabilities scoped to this enterprise. */
+    innersourceVulnerabilities?: (SecurityVulnerabilityConnectionGenqlSelection & { __args?: {
+    /** Ordering options for the returned vulnerabilities. */
+    orderBy?: (SecurityVulnerabilityOrder | null), 
+    /** An ecosystem to filter vulnerabilities by. */
+    ecosystem?: (SecurityAdvisoryEcosystem | null), 
+    /** A package name to filter vulnerabilities by. */
+    package?: (Scalars['String'] | null), 
+    /** A list of severities to filter vulnerabilities by. */
+    severities?: (SecurityAdvisorySeverity[] | null), 
+    /** Returns the elements in the list that come after the specified cursor. */
+    after?: (Scalars['String'] | null), 
+    /** Returns the elements in the list that come before the specified cursor. */
+    before?: (Scalars['String'] | null), 
+    /** Returns the first _n_ elements from the list. */
+    first?: (Scalars['Int'] | null), 
+    /** Returns the last _n_ elements from the list. */
+    last?: (Scalars['Int'] | null)} })
     /** The location of the enterprise. */
     location?: boolean | number
     /** A list of users who are members of this enterprise. */
@@ -35826,6 +35864,28 @@ export interface IssueFieldValueEdgeGenqlSelection{
 }
 
 
+/** A filter for matching an issue field value. Exactly one value argument should be provided. */
+export interface IssueFieldValueFilter {
+/** The ID of the issue field to filter by. Exactly one of `fieldId` or `fieldName` must be provided. */
+fieldId?: (Scalars['ID'] | null),
+/** The name of the issue field to filter by. Exactly one of `fieldId` or `fieldName` must be provided. */
+fieldName?: (Scalars['String'] | null),
+/** Matches a text issue field value. */
+textValue?: (Scalars['String'] | null),
+/** Matches a date issue field value (YYYY-MM-DD). */
+dateValue?: (Scalars['String'] | null),
+/** Matches a numeric issue field value. */
+numberValue?: (Scalars['Float'] | null),
+/** Matches a single-select issue field option by ID. */
+singleSelectOptionId?: (Scalars['ID'] | null),
+/** Matches a single-select issue field option by name. */
+singleSelectOptionValue?: (Scalars['String'] | null),
+/** Matches issues containing all of the multi-select issue field option IDs. */
+multiSelectOptionIds?: (Scalars['ID'][] | null),
+/** Matches issues containing all of the multi-select issue field option names. */
+multiSelectOptionValues?: (Scalars['String'][] | null)}
+
+
 /** Possible issue fields. */
 export interface IssueFieldsGenqlSelection{
     on_IssueFieldDate?:IssueFieldDateGenqlSelection,
@@ -35885,6 +35945,8 @@ since?: (Scalars['DateTime'] | null),
 states?: (IssueState[] | null),
 /** List issues filtered by the type given, only supported by searches on repositories. */
 type?: (Scalars['String'] | null),
+/** List issues where each supplied issue field value filter matches. */
+issueFieldValues?: (IssueFieldValueFilter[] | null),
 /** List issues subscribed to by viewer. */
 viewerSubscribed?: (Scalars['Boolean'] | null)}
 
@@ -42750,6 +42812,24 @@ export interface OrganizationGenqlSelection{
     hasSponsorsListing?: boolean | number
     /** The Node ID of the Organization object */
     id?: boolean | number
+    /** Innersource security vulnerabilities scoped to this organization. */
+    innersourceVulnerabilities?: (SecurityVulnerabilityConnectionGenqlSelection & { __args?: {
+    /** Ordering options for the returned vulnerabilities. */
+    orderBy?: (SecurityVulnerabilityOrder | null), 
+    /** An ecosystem to filter vulnerabilities by. */
+    ecosystem?: (SecurityAdvisoryEcosystem | null), 
+    /** A package name to filter vulnerabilities by. */
+    package?: (Scalars['String'] | null), 
+    /** A list of severities to filter vulnerabilities by. */
+    severities?: (SecurityAdvisorySeverity[] | null), 
+    /** Returns the elements in the list that come after the specified cursor. */
+    after?: (Scalars['String'] | null), 
+    /** Returns the elements in the list that come before the specified cursor. */
+    before?: (Scalars['String'] | null), 
+    /** Returns the first _n_ elements from the list. */
+    first?: (Scalars['Int'] | null), 
+    /** Returns the last _n_ elements from the list. */
+    last?: (Scalars['Int'] | null)} })
     /** The interaction ability settings for this organization. */
     interactionAbility?: RepositoryInteractionAbilityGenqlSelection
     /** The setting value for whether the organization has an IP allow list enabled. */
@@ -42900,6 +42980,16 @@ export interface OrganizationGenqlSelection{
     pinnableItems?: (PinnableItemConnectionGenqlSelection & { __args?: {
     /** Filter the types of pinnable items that are returned. */
     types?: (PinnableItemType[] | null), 
+    /** Returns the elements in the list that come after the specified cursor. */
+    after?: (Scalars['String'] | null), 
+    /** Returns the elements in the list that come before the specified cursor. */
+    before?: (Scalars['String'] | null), 
+    /** Returns the first _n_ elements from the list. */
+    first?: (Scalars['Int'] | null), 
+    /** Returns the last _n_ elements from the list. */
+    last?: (Scalars['Int'] | null)} })
+    /** An ordered list of issue fields pinned to issues when no type is selected. */
+    pinnedIssueFields?: (IssueFieldsConnectionGenqlSelection & { __args?: {
     /** Returns the elements in the list that come after the specified cursor. */
     after?: (Scalars['String'] | null), 
     /** Returns the elements in the list that come before the specified cursor. */
@@ -45601,6 +45691,10 @@ export interface ProjectV2FieldGenqlSelection{
     databaseId?: boolean | number
     /** The Node ID of the ProjectV2Field object */
     id?: boolean | number
+    /** Returns true if this field is associated with an organization issue field */
+    isIssueField?: boolean | number
+    /** The organization issue field associated with this project field, if any */
+    issueField?: IssueFieldsGenqlSelection
     /** The project field's name. */
     name?: boolean | number
     /** The project that contains this field. */
@@ -45622,6 +45716,8 @@ export interface ProjectV2FieldCommonGenqlSelection{
     databaseId?: boolean | number
     /** The Node ID of the ProjectV2FieldCommon object */
     id?: boolean | number
+    /** Returns true if this field is associated with an organization issue field */
+    isIssueField?: boolean | number
     /** The project field's name. */
     name?: boolean | number
     /** The project that contains this field. */
@@ -46242,6 +46338,8 @@ export interface ProjectV2IterationFieldGenqlSelection{
     databaseId?: boolean | number
     /** The Node ID of the ProjectV2IterationField object */
     id?: boolean | number
+    /** Returns true if this field is associated with an organization issue field */
+    isIssueField?: boolean | number
     /** The project field's name. */
     name?: boolean | number
     /** The project that contains this field. */
@@ -46305,6 +46403,10 @@ export interface ProjectV2MultiSelectFieldGenqlSelection{
     databaseId?: boolean | number
     /** The Node ID of the ProjectV2MultiSelectField object */
     id?: boolean | number
+    /** Returns true if this field is associated with an organization issue field */
+    isIssueField?: boolean | number
+    /** The organization issue field associated with this project field, if any */
+    issueField?: IssueFieldsGenqlSelection
     /** Options for the multi select field */
     multiSelectOptions?: (ProjectV2MultiSelectFieldOptionGenqlSelection & { __args?: {
     /** Filter returned options to only those matching these names, case insensitive. */
@@ -46422,6 +46524,10 @@ export interface ProjectV2SingleSelectFieldGenqlSelection{
     databaseId?: boolean | number
     /** The Node ID of the ProjectV2SingleSelectField object */
     id?: boolean | number
+    /** Returns true if this field is associated with an organization issue field */
+    isIssueField?: boolean | number
+    /** The organization issue field associated with this project field, if any */
+    issueField?: IssueFieldsGenqlSelection
     /** The project field's name. */
     name?: boolean | number
     /** Options for the single select field */
