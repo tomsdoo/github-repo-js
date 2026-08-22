@@ -12752,6 +12752,9 @@ type Issue implements Assignable & Closable & Comment & Deletable & Labelable & 
     """Return only manually linked PRs"""
     userLinkedOnly: Boolean = false
 
+    """Exclude manually linked PRs"""
+    excludeUserLinked: Boolean = false
+
     """Returns the elements in the list that come after the specified cursor."""
     after: String
 
@@ -14111,6 +14114,33 @@ type IssueFieldTimelineOption {
 
   """The option name."""
   name: String!
+}
+
+"""Updates an issue field using its user-facing name."""
+input IssueFieldUpdateInput {
+  """The name of the issue field."""
+  fieldName: String!
+
+  """The operation to perform."""
+  operation: IssueFieldUpdateOperation!
+
+  """The value or comma-separated option names for the operation."""
+  value: String
+}
+
+"""The operation to perform on an issue field value."""
+enum IssueFieldUpdateOperation {
+  """Replaces the field value."""
+  SET
+
+  """Sets a scalar field or adds options to a multi-select field."""
+  ADD
+
+  """Removes options from a multi-select field."""
+  REMOVE
+
+  """Clears the field value."""
+  CLEAR
 }
 
 """Issue field values"""
@@ -26410,11 +26440,6 @@ enum ProofOfPresenceRequirement {
 
   """Members must satisfy an MFA re-authentication."""
   MFA
-
-  """
-  Members must satisfy a phishing-resistant security key re-authentication (Microsoft Entra only).
-  """
-  SECURITY_KEY
 }
 
 """A property that must match"""
@@ -26619,6 +26644,9 @@ type PullRequest implements Assignable & Closable & Comment & Labelable & Lockab
   closingIssuesReferences(
     """Return only manually linked Issues"""
     userLinkedOnly: Boolean = false
+
+    """Exclude manually linked Issues"""
+    excludeUserLinked: Boolean = false
 
     """Returns the elements in the list that come after the specified cursor."""
     after: String
@@ -42208,6 +42236,9 @@ input UpdateIssueInput {
   The Issue Type to set on this issue, with optional rationale. Mutually exclusive with `issueTypeId`.
   """
   issueType: IssueTypeUpdateInput
+
+  """Issue field updates resolved by field and option names."""
+  issueFieldUpdates: [IssueFieldUpdateInput!]
 
   """Configuration for assigning an AI agent to this issue."""
   agentAssignment: AgentAssignmentInput

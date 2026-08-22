@@ -6814,6 +6814,10 @@ export interface IssueFieldTimelineOption {
 }
 
 
+/** The operation to perform on an issue field value. */
+export type IssueFieldUpdateOperation = 'SET' | 'ADD' | 'REMOVE' | 'CLEAR'
+
+
 /** Issue field values */
 export type IssueFieldValue = (IssueFieldDateValue | IssueFieldMultiSelectValue | IssueFieldNumberValue | IssueFieldSingleSelectValue | IssueFieldTextValue) & { __isUnion?: true }
 
@@ -14973,7 +14977,7 @@ export interface PromoteRepositoryCustomPropertyPayload {
 
 
 /** The proof of presence (PoP) re-authentication requirement for sudo actions in an enterprise. */
-export type ProofOfPresenceRequirement = 'NO_POLICY' | 'REAUTH' | 'MFA' | 'SECURITY_KEY'
+export type ProofOfPresenceRequirement = 'NO_POLICY' | 'REAUTH' | 'MFA'
 
 
 /** A property that must match */
@@ -34843,6 +34847,8 @@ export interface IssueGenqlSelection{
     orderByState?: (Scalars['Boolean'] | null), 
     /** Return only manually linked PRs */
     userLinkedOnly?: (Scalars['Boolean'] | null), 
+    /** Exclude manually linked PRs */
+    excludeUserLinked?: (Scalars['Boolean'] | null), 
     /** Returns the elements in the list that come after the specified cursor. */
     after?: (Scalars['String'] | null), 
     /** Returns the elements in the list that come before the specified cursor. */
@@ -35809,6 +35815,16 @@ export interface IssueFieldTimelineOptionGenqlSelection{
     __typename?: boolean | number
     __scalar?: boolean | number
 }
+
+
+/** Updates an issue field using its user-facing name. */
+export interface IssueFieldUpdateInput {
+/** The name of the issue field. */
+fieldName: Scalars['String'],
+/** The operation to perform. */
+operation: IssueFieldUpdateOperation,
+/** The value or comma-separated option names for the operation. */
+value?: (Scalars['String'] | null)}
 
 
 /** Issue field values */
@@ -47141,6 +47157,8 @@ export interface PullRequestGenqlSelection{
     closingIssuesReferences?: (IssueConnectionGenqlSelection & { __args?: {
     /** Return only manually linked Issues */
     userLinkedOnly?: (Scalars['Boolean'] | null), 
+    /** Exclude manually linked Issues */
+    excludeUserLinked?: (Scalars['Boolean'] | null), 
     /** Returns the elements in the list that come after the specified cursor. */
     after?: (Scalars['String'] | null), 
     /** Returns the elements in the list that come before the specified cursor. */
@@ -59202,6 +59220,8 @@ projectIds?: (Scalars['ID'][] | null),
 issueTypeId?: (Scalars['ID'] | null),
 /** The Issue Type to set on this issue, with optional rationale. Mutually exclusive with `issueTypeId`. */
 issueType?: (IssueTypeUpdateInput | null),
+/** Issue field updates resolved by field and option names. */
+issueFieldUpdates?: (IssueFieldUpdateInput[] | null),
 /** Configuration for assigning an AI agent to this issue. */
 agentAssignment?: (AgentAssignmentInput | null)}
 
@@ -71309,6 +71329,13 @@ export const enumIssueFieldSingleSelectOptionColor = {
    PURPLE: 'PURPLE' as const
 }
 
+export const enumIssueFieldUpdateOperation = {
+   SET: 'SET' as const,
+   ADD: 'ADD' as const,
+   REMOVE: 'REMOVE' as const,
+   CLEAR: 'CLEAR' as const
+}
+
 export const enumIssueFieldVisibility = {
    ORG_ONLY: 'ORG_ONLY' as const,
    ALL: 'ALL' as const
@@ -71908,8 +71935,7 @@ export const enumProjectV2WorkflowsOrderField = {
 export const enumProofOfPresenceRequirement = {
    NO_POLICY: 'NO_POLICY' as const,
    REAUTH: 'REAUTH' as const,
-   MFA: 'MFA' as const,
-   SECURITY_KEY: 'SECURITY_KEY' as const
+   MFA: 'MFA' as const
 }
 
 export const enumPullRequestAllowedMergeMethods = {
