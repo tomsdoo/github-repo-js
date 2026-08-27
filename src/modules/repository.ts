@@ -18,6 +18,7 @@ import { readyGitHubRepositoryLatestRelease } from "@/modules/repository-latest-
 import { readyGitHubRepositoryRuns } from "@/modules/repository-runs";
 import { readyGitHubTree } from "@/modules/tree";
 import { readyGitHubRepositoryTrees } from "@/modules/repository-trees";
+import { readyGitHubRepositoryCompare } from "@/modules/repository-compare";
 import type { Endpoints } from "@octokit/types";
 
 export function readyGitHubRepository(token: string) {
@@ -40,6 +41,7 @@ export function readyGitHubRepository(token: string) {
     readyGitHubRepositoryLatestRelease(token);
   const GitHubRepositoryRuns = readyGitHubRepositoryRuns(token);
   const GitHubRepositoryTrees = readyGitHubRepositoryTrees(token);
+  const GitHubRepositoryCompare = readyGitHubRepositoryCompare(token);
   const GitHubTree = readyGitHubTree(token);
   return class GitHubRepository extends GitHubRepoApiBase<
     Endpoints["GET /repos/{owner}/{repo}"]["response"]["data"],
@@ -249,6 +251,14 @@ export function readyGitHubRepository(token: string) {
       return await new GitHubRepositoryRuns(this.owner, this.repo).getList(
         query,
       );
+    }
+    async compare(base: string, head: string) {
+      return await new GitHubRepositoryCompare(
+        this.owner,
+        this.repo,
+        base,
+        head,
+      ).get();
     }
   };
 }
