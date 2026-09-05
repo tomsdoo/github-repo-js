@@ -8657,7 +8657,7 @@ export interface Mutation {
     createDeploymentStatus: (CreateDeploymentStatusPayload | null)
     /** Create a discussion. */
     createDiscussion: (CreateDiscussionPayload | null)
-    /** Creates an organization as part of an enterprise account. A personal access token used to create an organization is implicitly permitted to update the organization it created, if the organization is part of an enterprise that has SAML enabled or uses Enterprise Managed Users. If the organization is not part of such an enterprise, and instead has SAML enabled for it individually, the token will then require SAML authorization to continue working against that organization. */
+    /** Creates an organization as part of an enterprise account. User-authenticated requests make the viewer an owner. Users listed in `adminLogins` are invited as owners unless owner invitations are disabled, in which case they are added directly. Installation requests also add existing enterprise members directly. Invitation failures do not roll back organization creation. A personal access token used to create an organization is implicitly permitted to update the organization it created, if the organization is part of an enterprise that has SAML enabled or uses Enterprise Managed Users. If the organization is not part of such an enterprise, and instead has SAML enabled for it individually, the token will then require SAML authorization to continue working against that organization. */
     createEnterpriseOrganization: (CreateEnterpriseOrganizationPayload | null)
     /** Creates an environment or simply returns it if already exists. */
     createEnvironment: (CreateEnvironmentPayload | null)
@@ -12622,7 +12622,7 @@ export type OrganizationInvitationRole = 'DIRECT_MEMBER' | 'ADMIN' | 'BILLING_MA
 
 
 /** The possible organization invitation sources. */
-export type OrganizationInvitationSource = 'UNKNOWN' | 'MEMBER' | 'SCIM'
+export type OrganizationInvitationSource = 'UNKNOWN' | 'MEMBER' | 'SCIM' | 'ENTERPRISE_ORGANIZATION_CREATION'
 
 
 /** The possible organization invitation types. */
@@ -16016,7 +16016,7 @@ export interface PullRequestTimelineItemsEdge {
 
 
 /** The possible item types found in a timeline. */
-export type PullRequestTimelineItemsItemType = 'PULL_REQUEST_COMMIT' | 'PULL_REQUEST_COMMIT_COMMENT_THREAD' | 'PULL_REQUEST_REVIEW' | 'PULL_REQUEST_REVIEW_THREAD' | 'PULL_REQUEST_REVISION_MARKER' | 'ADDED_TO_MERGE_QUEUE_EVENT' | 'ARCHIVED_EVENT' | 'AUTOMATIC_BASE_CHANGE_FAILED_EVENT' | 'AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT' | 'AUTO_MERGE_DISABLED_EVENT' | 'AUTO_MERGE_ENABLED_EVENT' | 'AUTO_REBASE_ENABLED_EVENT' | 'AUTO_SQUASH_ENABLED_EVENT' | 'BASE_REF_CHANGED_EVENT' | 'BASE_REF_FORCE_PUSHED_EVENT' | 'BASE_REF_DELETED_EVENT' | 'CONVERT_TO_DRAFT_EVENT' | 'DEPLOYED_EVENT' | 'DEPLOYMENT_ENVIRONMENT_CHANGED_EVENT' | 'HEAD_REF_DELETED_EVENT' | 'HEAD_REF_FORCE_PUSHED_EVENT' | 'HEAD_REF_RESTORED_EVENT' | 'MERGED_EVENT' | 'READY_FOR_REVIEW_EVENT' | 'REMOVED_FROM_MERGE_QUEUE_EVENT' | 'REVIEW_DISMISSED_EVENT' | 'REVIEW_REQUESTED_EVENT' | 'REVIEW_REQUEST_REMOVED_EVENT' | 'UNARCHIVED_EVENT' | 'ISSUE_COMMENT' | 'CROSS_REFERENCED_EVENT' | 'ADDED_TO_PROJECT_EVENT' | 'ADDED_TO_PROJECT_V2_EVENT' | 'ASSIGNED_EVENT' | 'CLOSED_EVENT' | 'COMMENT_DELETED_EVENT' | 'CONNECTED_EVENT' | 'CONVERTED_FROM_DRAFT_EVENT' | 'CONVERTED_NOTE_TO_ISSUE_EVENT' | 'CONVERTED_TO_DISCUSSION_EVENT' | 'DEMILESTONED_EVENT' | 'DISCONNECTED_EVENT' | 'LABELED_EVENT' | 'LOCKED_EVENT' | 'MARKED_AS_DUPLICATE_EVENT' | 'MENTIONED_EVENT' | 'MILESTONED_EVENT' | 'MOVED_COLUMNS_IN_PROJECT_EVENT' | 'PINNED_EVENT' | 'PROJECT_V2_ITEM_STATUS_CHANGED_EVENT' | 'REFERENCED_EVENT' | 'REMOVED_FROM_PROJECT_EVENT' | 'REMOVED_FROM_PROJECT_V2_EVENT' | 'RENAMED_TITLE_EVENT' | 'REOPENED_EVENT' | 'SUBSCRIBED_EVENT' | 'TRANSFERRED_EVENT' | 'UNASSIGNED_EVENT' | 'UNLABELED_EVENT' | 'UNLOCKED_EVENT' | 'USER_BLOCKED_EVENT' | 'UNMARKED_AS_DUPLICATE_EVENT' | 'UNPINNED_EVENT' | 'UNSUBSCRIBED_EVENT' | 'ISSUE_COMMENT_PINNED_EVENT' | 'ISSUE_COMMENT_UNPINNED_EVENT' | 'ISSUE_TYPE_ADDED_EVENT' | 'ISSUE_TYPE_REMOVED_EVENT' | 'ISSUE_TYPE_CHANGED_EVENT' | 'ISSUE_FIELD_ADDED_EVENT' | 'ISSUE_FIELD_REMOVED_EVENT' | 'ISSUE_FIELD_CHANGED_EVENT' | 'SUB_ISSUE_ADDED_EVENT' | 'SUB_ISSUE_REMOVED_EVENT' | 'PARENT_ISSUE_ADDED_EVENT' | 'PARENT_ISSUE_REMOVED_EVENT' | 'BLOCKED_BY_ADDED_EVENT' | 'BLOCKING_ADDED_EVENT' | 'BLOCKED_BY_REMOVED_EVENT' | 'BLOCKING_REMOVED_EVENT'
+export type PullRequestTimelineItemsItemType = 'PULL_REQUEST_COMMIT' | 'PULL_REQUEST_COMMIT_COMMENT_THREAD' | 'PULL_REQUEST_REVIEW' | 'PULL_REQUEST_REVIEW_THREAD' | 'PULL_REQUEST_REVISION_MARKER' | 'ADDED_TO_MERGE_QUEUE_EVENT' | 'ADDED_TO_STACK_EVENT' | 'ARCHIVED_EVENT' | 'AUTOMATIC_BASE_CHANGE_FAILED_EVENT' | 'AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT' | 'AUTO_MERGE_DISABLED_EVENT' | 'AUTO_MERGE_ENABLED_EVENT' | 'AUTO_REBASE_ENABLED_EVENT' | 'AUTO_SQUASH_ENABLED_EVENT' | 'BASE_REF_CHANGED_EVENT' | 'BASE_REF_FORCE_PUSHED_EVENT' | 'BASE_REF_DELETED_EVENT' | 'CONVERT_TO_DRAFT_EVENT' | 'DEPLOYED_EVENT' | 'DEPLOYMENT_ENVIRONMENT_CHANGED_EVENT' | 'HEAD_REF_DELETED_EVENT' | 'HEAD_REF_FORCE_PUSHED_EVENT' | 'HEAD_REF_RESTORED_EVENT' | 'MERGED_EVENT' | 'READY_FOR_REVIEW_EVENT' | 'REMOVED_FROM_MERGE_QUEUE_EVENT' | 'REMOVED_FROM_STACK_EVENT' | 'REVIEW_DISMISSED_EVENT' | 'REVIEW_REQUESTED_EVENT' | 'REVIEW_REQUEST_REMOVED_EVENT' | 'UNARCHIVED_EVENT' | 'ISSUE_COMMENT' | 'CROSS_REFERENCED_EVENT' | 'ADDED_TO_PROJECT_EVENT' | 'ADDED_TO_PROJECT_V2_EVENT' | 'ASSIGNED_EVENT' | 'CLOSED_EVENT' | 'COMMENT_DELETED_EVENT' | 'CONNECTED_EVENT' | 'CONVERTED_FROM_DRAFT_EVENT' | 'CONVERTED_NOTE_TO_ISSUE_EVENT' | 'CONVERTED_TO_DISCUSSION_EVENT' | 'DEMILESTONED_EVENT' | 'DISCONNECTED_EVENT' | 'LABELED_EVENT' | 'LOCKED_EVENT' | 'MARKED_AS_DUPLICATE_EVENT' | 'MENTIONED_EVENT' | 'MILESTONED_EVENT' | 'MOVED_COLUMNS_IN_PROJECT_EVENT' | 'PINNED_EVENT' | 'PROJECT_V2_ITEM_STATUS_CHANGED_EVENT' | 'REFERENCED_EVENT' | 'REMOVED_FROM_PROJECT_EVENT' | 'REMOVED_FROM_PROJECT_V2_EVENT' | 'RENAMED_TITLE_EVENT' | 'REOPENED_EVENT' | 'SUBSCRIBED_EVENT' | 'TRANSFERRED_EVENT' | 'UNASSIGNED_EVENT' | 'UNLABELED_EVENT' | 'UNLOCKED_EVENT' | 'USER_BLOCKED_EVENT' | 'UNMARKED_AS_DUPLICATE_EVENT' | 'UNPINNED_EVENT' | 'UNSUBSCRIBED_EVENT' | 'ISSUE_COMMENT_PINNED_EVENT' | 'ISSUE_COMMENT_UNPINNED_EVENT' | 'ISSUE_TYPE_ADDED_EVENT' | 'ISSUE_TYPE_REMOVED_EVENT' | 'ISSUE_TYPE_CHANGED_EVENT' | 'ISSUE_FIELD_ADDED_EVENT' | 'ISSUE_FIELD_REMOVED_EVENT' | 'ISSUE_FIELD_CHANGED_EVENT' | 'SUB_ISSUE_ADDED_EVENT' | 'SUB_ISSUE_REMOVED_EVENT' | 'PARENT_ISSUE_ADDED_EVENT' | 'PARENT_ISSUE_REMOVED_EVENT' | 'BLOCKED_BY_ADDED_EVENT' | 'BLOCKING_ADDED_EVENT' | 'BLOCKED_BY_REMOVED_EVENT' | 'BLOCKING_REMOVED_EVENT'
 
 
 /** The possible target states when updating a pull request. */
@@ -19772,6 +19772,8 @@ export interface RepositoryRulesetBypassActor {
     enterpriseOwner: Scalars['Boolean']
     /** This actor represents the ability for an enterprise role to bypass */
     enterpriseRole: Scalars['Boolean']
+    /** If the actor is an enterprise role, the enterprise role's ID that can bypass */
+    enterpriseRoleDatabaseId: (Scalars['BigInt'] | null)
     /** The Node ID of the RepositoryRulesetBypassActor object */
     id: Scalars['ID']
     /** This actor represents the ability for an organization owner to bypass */
@@ -29099,7 +29101,7 @@ login: Scalars['String'],
 profileName: Scalars['String'],
 /** The email used for sending billing receipts. */
 billingEmail: Scalars['String'],
-/** The logins for the administrators of the new organization. */
+/** The logins of additional organization owners. Listed users are invited unless owner invitations are disabled, in which case they are added directly. Installation requests also add existing enterprise members directly. */
 adminLogins: Scalars['String'][]}
 
 
@@ -38469,7 +38471,7 @@ export interface MutationGenqlSelection{
     createDiscussion?: (CreateDiscussionPayloadGenqlSelection & { __args: {
     /** Parameters for CreateDiscussion */
     input: CreateDiscussionInput} })
-    /** Creates an organization as part of an enterprise account. A personal access token used to create an organization is implicitly permitted to update the organization it created, if the organization is part of an enterprise that has SAML enabled or uses Enterprise Managed Users. If the organization is not part of such an enterprise, and instead has SAML enabled for it individually, the token will then require SAML authorization to continue working against that organization. */
+    /** Creates an organization as part of an enterprise account. User-authenticated requests make the viewer an owner. Users listed in `adminLogins` are invited as owners unless owner invitations are disabled, in which case they are added directly. Installation requests also add existing enterprise members directly. Invitation failures do not roll back organization creation. A personal access token used to create an organization is implicitly permitted to update the organization it created, if the organization is part of an enterprise that has SAML enabled or uses Enterprise Managed Users. If the organization is not part of such an enterprise, and instead has SAML enabled for it individually, the token will then require SAML authorization to continue working against that organization. */
     createEnterpriseOrganization?: (CreateEnterpriseOrganizationPayloadGenqlSelection & { __args: {
     /** Parameters for CreateEnterpriseOrganization */
     input: CreateEnterpriseOrganizationInput} })
@@ -53777,6 +53779,8 @@ export interface RepositoryRulesetBypassActorGenqlSelection{
     enterpriseOwner?: boolean | number
     /** This actor represents the ability for an enterprise role to bypass */
     enterpriseRole?: boolean | number
+    /** If the actor is an enterprise role, the enterprise role's ID that can bypass */
+    enterpriseRoleDatabaseId?: boolean | number
     /** The Node ID of the RepositoryRulesetBypassActor object */
     id?: boolean | number
     /** This actor represents the ability for an organization owner to bypass */
@@ -53818,7 +53822,7 @@ export interface RepositoryRulesetBypassActorEdgeGenqlSelection{
 }
 
 
-/** Specifies the attributes for a new or updated ruleset bypass actor. Only one of `actor_id`, `repository_role_database_id`, `organization_admin`, `enterprise_owner`, or `deploy_key` should be specified. */
+/** Specifies the attributes for a new or updated ruleset bypass actor. Exactly one of `actor_id`, `repository_role_database_id`, `organization_admin`, `enterprise_owner`, `enterprise_role_database_id`, or `deploy_key` should be specified. */
 export interface RepositoryRulesetBypassActorInput {
 /** For Team, Integration and User bypasses, the Team, Integration, or User ID */
 actorId?: (Scalars['ID'] | null),
@@ -53828,8 +53832,8 @@ repositoryRoleDatabaseId?: (Scalars['Int'] | null),
 organizationAdmin?: (Scalars['Boolean'] | null),
 /** For enterprise owner bypasses, true */
 enterpriseOwner?: (Scalars['Boolean'] | null),
-/** For enterprise role bypasses, true. NOTE: This bypass actor is in beta. */
-enterpriseRole?: (Scalars['Boolean'] | null),
+/** For enterprise role bypasses, the enterprise role database ID. NOTE: This bypass actor is in beta. */
+enterpriseRoleDatabaseId?: (Scalars['BigInt'] | null),
 /** For deploy key bypasses, true. Can only use ALWAYS as the bypass mode */
 deployKey?: (Scalars['Boolean'] | null),
 /** The bypass mode for this actor. */
@@ -71760,7 +71764,8 @@ export const enumOrganizationInvitationRole = {
 export const enumOrganizationInvitationSource = {
    UNKNOWN: 'UNKNOWN' as const,
    MEMBER: 'MEMBER' as const,
-   SCIM: 'SCIM' as const
+   SCIM: 'SCIM' as const,
+   ENTERPRISE_ORGANIZATION_CREATION: 'ENTERPRISE_ORGANIZATION_CREATION' as const
 }
 
 export const enumOrganizationInvitationType = {
@@ -72113,6 +72118,7 @@ export const enumPullRequestTimelineItemsItemType = {
    PULL_REQUEST_REVIEW_THREAD: 'PULL_REQUEST_REVIEW_THREAD' as const,
    PULL_REQUEST_REVISION_MARKER: 'PULL_REQUEST_REVISION_MARKER' as const,
    ADDED_TO_MERGE_QUEUE_EVENT: 'ADDED_TO_MERGE_QUEUE_EVENT' as const,
+   ADDED_TO_STACK_EVENT: 'ADDED_TO_STACK_EVENT' as const,
    ARCHIVED_EVENT: 'ARCHIVED_EVENT' as const,
    AUTOMATIC_BASE_CHANGE_FAILED_EVENT: 'AUTOMATIC_BASE_CHANGE_FAILED_EVENT' as const,
    AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT: 'AUTOMATIC_BASE_CHANGE_SUCCEEDED_EVENT' as const,
@@ -72132,6 +72138,7 @@ export const enumPullRequestTimelineItemsItemType = {
    MERGED_EVENT: 'MERGED_EVENT' as const,
    READY_FOR_REVIEW_EVENT: 'READY_FOR_REVIEW_EVENT' as const,
    REMOVED_FROM_MERGE_QUEUE_EVENT: 'REMOVED_FROM_MERGE_QUEUE_EVENT' as const,
+   REMOVED_FROM_STACK_EVENT: 'REMOVED_FROM_STACK_EVENT' as const,
    REVIEW_DISMISSED_EVENT: 'REVIEW_DISMISSED_EVENT' as const,
    REVIEW_REQUESTED_EVENT: 'REVIEW_REQUESTED_EVENT' as const,
    REVIEW_REQUEST_REMOVED_EVENT: 'REVIEW_REQUEST_REMOVED_EVENT' as const,

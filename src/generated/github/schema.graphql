@@ -5221,7 +5221,9 @@ input CreateEnterpriseOrganizationInput {
   """The email used for sending billing receipts."""
   billingEmail: String!
 
-  """The logins for the administrators of the new organization."""
+  """
+  The logins of additional organization owners. Listed users are invited unless owner invitations are disabled, in which case they are added directly. Installation requests also add existing enterprise members directly.
+  """
   adminLogins: [String!]!
 }
 
@@ -17468,7 +17470,7 @@ type Mutation {
   ): CreateDiscussionPayload
 
   """
-  Creates an organization as part of an enterprise account. A personal access token used to create an organization is implicitly permitted to update the organization it created, if the organization is part of an enterprise that has SAML enabled or uses Enterprise Managed Users. If the organization is not part of such an enterprise, and instead has SAML enabled for it individually, the token will then require SAML authorization to continue working against that organization.
+  Creates an organization as part of an enterprise account. User-authenticated requests make the viewer an owner. Users listed in `adminLogins` are invited as owners unless owner invitations are disabled, in which case they are added directly. Installation requests also add existing enterprise members directly. Invitation failures do not roll back organization creation. A personal access token used to create an organization is implicitly permitted to update the organization it created, if the organization is part of an enterprise that has SAML enabled or uses Enterprise Managed Users. If the organization is not part of such an enterprise, and instead has SAML enabled for it individually, the token will then require SAML authorization to continue working against that organization.
   """
   createEnterpriseOrganization(
     """Parameters for CreateEnterpriseOrganization"""
@@ -22494,6 +22496,9 @@ enum OrganizationInvitationSource {
 
   """The invitation was created from SCIM"""
   SCIM
+
+  """The invitation was created with an enterprise organization"""
+  ENTERPRISE_ORGANIZATION_CREATION
 }
 
 """The possible organization invitation types."""
@@ -28628,6 +28633,9 @@ enum PullRequestTimelineItemsItemType {
   """Represents an 'added_to_merge_queue' event on a given pull request."""
   ADDED_TO_MERGE_QUEUE_EVENT
 
+  """Represents an 'added_to_stack' event on a given pull request."""
+  ADDED_TO_STACK_EVENT
+
   """Represents an 'archived' event on a given pull request."""
   ARCHIVED_EVENT
 
@@ -28692,6 +28700,9 @@ enum PullRequestTimelineItemsItemType {
 
   """Represents a 'removed_from_merge_queue' event on a given pull request."""
   REMOVED_FROM_MERGE_QUEUE_EVENT
+
+  """Represents a 'removed_from_stack' event on a given pull request."""
+  REMOVED_FROM_STACK_EVENT
 
   """
   Represents a 'review_dismissed' event on a given issue or pull request.
@@ -34829,6 +34840,11 @@ type RepositoryRulesetBypassActor implements Node {
   """This actor represents the ability for an enterprise role to bypass"""
   enterpriseRole: Boolean!
 
+  """
+  If the actor is an enterprise role, the enterprise role's ID that can bypass
+  """
+  enterpriseRoleDatabaseId: BigInt
+
   """The Node ID of the RepositoryRulesetBypassActor object"""
   id: ID!
 
@@ -34886,7 +34902,7 @@ type RepositoryRulesetBypassActorEdge {
 }
 
 """
-Specifies the attributes for a new or updated ruleset bypass actor. Only one of `actor_id`, `repository_role_database_id`, `organization_admin`, `enterprise_owner`, or `deploy_key` should be specified.
+Specifies the attributes for a new or updated ruleset bypass actor. Exactly one of `actor_id`, `repository_role_database_id`, `organization_admin`, `enterprise_owner`, `enterprise_role_database_id`, or `deploy_key` should be specified.
 """
 input RepositoryRulesetBypassActorInput {
   """
@@ -34904,9 +34920,9 @@ input RepositoryRulesetBypassActorInput {
   enterpriseOwner: Boolean
 
   """
-  For enterprise role bypasses, true. NOTE: This bypass actor is in beta.
+  For enterprise role bypasses, the enterprise role database ID. NOTE: This bypass actor is in beta.
   """
-  enterpriseRole: Boolean
+  enterpriseRoleDatabaseId: BigInt
 
   """For deploy key bypasses, true. Can only use ALWAYS as the bypass mode"""
   deployKey: Boolean
