@@ -4877,7 +4877,7 @@ type ConvertedToDiscussionEvent implements Node {
 }
 
 """
-Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and their premium requests quota has not reached the limit.
+Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and AI credits.
 """
 type CopilotCodeReviewParameters {
   """
@@ -4890,7 +4890,7 @@ type CopilotCodeReviewParameters {
 }
 
 """
-Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and their premium requests quota has not reached the limit.
+Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and AI credits.
 """
 input CopilotCodeReviewParametersInput {
   """
@@ -27782,7 +27782,7 @@ type PullRequestParameters {
   requiredReviewThreadResolution: Boolean!
 
   """
-  This field is in beta and subject to change. A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review.
+  A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review.
   """
   requiredReviewers: [RequiredReviewerConfiguration!]
 }
@@ -27827,7 +27827,7 @@ input PullRequestParametersInput {
   requiredReviewThreadResolution: Boolean!
 
   """
-  This argument is in beta and subject to change. A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review.
+  A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review.
   """
   requiredReviewers: [RequiredReviewerConfigurationInput!]
 }
@@ -34894,7 +34894,7 @@ enum RepositoryRuleType {
   CODE_COVERAGE
 
   """
-  Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and their premium requests quota has not reached the limit.
+  Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and AI credits.
   """
   COPILOT_CODE_REVIEW
 

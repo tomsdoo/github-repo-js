@@ -2462,7 +2462,7 @@ export interface ConvertedToDiscussionEvent {
 }
 
 
-/** Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and their premium requests quota has not reached the limit. */
+/** Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and AI credits. */
 export interface CopilotCodeReviewParameters {
     /** Copilot automatically reviews draft pull requests before they are marked as ready for review. */
     reviewDraftPullRequests: Scalars['Boolean']
@@ -15500,7 +15500,7 @@ export interface PullRequestParameters {
     requiredApprovingReviewCount: Scalars['Int']
     /** All conversations on code must be resolved before a pull request can be merged. */
     requiredReviewThreadResolution: Scalars['Boolean']
-    /** This field is in beta and subject to change. A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review. */
+    /** A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review. */
     requiredReviewers: (RequiredReviewerConfiguration[] | null)
     __typename: 'PullRequestParameters'
 }
@@ -28882,7 +28882,7 @@ export interface ConvertedToDiscussionEventGenqlSelection{
 }
 
 
-/** Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and their premium requests quota has not reached the limit. */
+/** Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and AI credits. */
 export interface CopilotCodeReviewParametersGenqlSelection{
     /** Copilot automatically reviews draft pull requests before they are marked as ready for review. */
     reviewDraftPullRequests?: boolean | number
@@ -28893,7 +28893,7 @@ export interface CopilotCodeReviewParametersGenqlSelection{
 }
 
 
-/** Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and their premium requests quota has not reached the limit. */
+/** Request Copilot code review for new pull requests automatically if the author has access to Copilot code review and AI credits. */
 export interface CopilotCodeReviewParametersInput {
 /** Copilot automatically reviews draft pull requests before they are marked as ready for review. */
 reviewDraftPullRequests?: (Scalars['Boolean'] | null),
@@ -47946,7 +47946,7 @@ export interface PullRequestParametersGenqlSelection{
     requiredApprovingReviewCount?: boolean | number
     /** All conversations on code must be resolved before a pull request can be merged. */
     requiredReviewThreadResolution?: boolean | number
-    /** This field is in beta and subject to change. A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review. */
+    /** A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review. */
     requiredReviewers?: RequiredReviewerConfigurationGenqlSelection
     __typename?: boolean | number
     __scalar?: boolean | number
@@ -47969,7 +47969,7 @@ requireLastPushApproval: Scalars['Boolean'],
 requiredApprovingReviewCount: Scalars['Int'],
 /** All conversations on code must be resolved before a pull request can be merged. */
 requiredReviewThreadResolution: Scalars['Boolean'],
-/** This argument is in beta and subject to change. A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review. */
+/** A collection of reviewers and associated file patterns. Each reviewer has a list of file patterns which determine the files that reviewer is required to review. */
 requiredReviewers?: (RequiredReviewerConfigurationInput[] | null)}
 
 
