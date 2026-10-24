@@ -12445,6 +12445,9 @@ export default {
             ]
         },
         "FilePathRestrictionParameters": {
+            "ignoredFilePaths": [
+                1537
+            ],
             "restrictedFilePaths": [
                 1537
             ],
@@ -12453,6 +12456,9 @@ export default {
             ]
         },
         "FilePathRestrictionParametersInput": {
+            "ignoredFilePaths": [
+                1537
+            ],
             "restrictedFilePaths": [
                 1537
             ],
@@ -16797,6 +16803,9 @@ export default {
             ]
         },
         "MaxFileSizeParameters": {
+            "ignoredFilePaths": [
+                1537
+            ],
             "maxFileSize": [
                 645
             ],
@@ -16805,6 +16814,9 @@ export default {
             ]
         },
         "MaxFileSizeParametersInput": {
+            "ignoredFilePaths": [
+                1537
+            ],
             "maxFileSize": [
                 645
             ],

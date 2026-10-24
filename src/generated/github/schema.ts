@@ -5635,6 +5635,8 @@ export interface FileExtensionRestrictionParameters {
 
 /** Prevent commits that include changes in specified file and folder paths from being pushed to the commit graph. This includes absolute paths that contain file names. */
 export interface FilePathRestrictionParameters {
+    /** Files matching these patterns are allowed even when they also match a restricted path. */
+    ignoredFilePaths: (Scalars['String'][] | null)
     /** The file paths that are restricted from being pushed to the commit graph. */
     restrictedFilePaths: Scalars['String'][]
     __typename: 'FilePathRestrictionParameters'
@@ -7757,6 +7759,8 @@ export interface MaxFilePathLengthParameters {
 
 /** Prevent commits with individual files that exceed the specified limit from being pushed to the commit graph. */
 export interface MaxFileSizeParameters {
+    /** Files matching these patterns may exceed the maximum size. */
+    ignoredFilePaths: (Scalars['String'][] | null)
     /** The maximum file size allowed in megabytes. This limit does not apply to Git Large File Storage (Git LFS). */
     maxFileSize: Scalars['Int']
     __typename: 'MaxFileSizeParameters'
@@ -34204,6 +34208,8 @@ restrictedFileExtensions: Scalars['String'][]}
 
 /** Prevent commits that include changes in specified file and folder paths from being pushed to the commit graph. This includes absolute paths that contain file names. */
 export interface FilePathRestrictionParametersGenqlSelection{
+    /** Files matching these patterns are allowed even when they also match a restricted path. */
+    ignoredFilePaths?: boolean | number
     /** The file paths that are restricted from being pushed to the commit graph. */
     restrictedFilePaths?: boolean | number
     __typename?: boolean | number
@@ -34213,6 +34219,8 @@ export interface FilePathRestrictionParametersGenqlSelection{
 
 /** Prevent commits that include changes in specified file and folder paths from being pushed to the commit graph. This includes absolute paths that contain file names. */
 export interface FilePathRestrictionParametersInput {
+/** Files matching these patterns are allowed even when they also match a restricted path. */
+ignoredFilePaths?: (Scalars['String'][] | null),
 /** The file paths that are restricted from being pushed to the commit graph. */
 restrictedFilePaths: Scalars['String'][]}
 
@@ -37340,6 +37348,8 @@ maxFilePathLength: Scalars['Int']}
 
 /** Prevent commits with individual files that exceed the specified limit from being pushed to the commit graph. */
 export interface MaxFileSizeParametersGenqlSelection{
+    /** Files matching these patterns may exceed the maximum size. */
+    ignoredFilePaths?: boolean | number
     /** The maximum file size allowed in megabytes. This limit does not apply to Git Large File Storage (Git LFS). */
     maxFileSize?: boolean | number
     __typename?: boolean | number
@@ -37349,6 +37359,8 @@ export interface MaxFileSizeParametersGenqlSelection{
 
 /** Prevent commits with individual files that exceed the specified limit from being pushed to the commit graph. */
 export interface MaxFileSizeParametersInput {
+/** Files matching these patterns may exceed the maximum size. */
+ignoredFilePaths?: (Scalars['String'][] | null),
 /** The maximum file size allowed in megabytes. This limit does not apply to Git Large File Storage (Git LFS). */
 maxFileSize: Scalars['Int']}
 
