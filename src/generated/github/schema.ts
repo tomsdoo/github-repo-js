@@ -15498,6 +15498,8 @@ export interface PullRequestParameters {
     dismissalRestriction: (DismissalRestriction | null)
     /** Require an approving review in pull requests that modify files that have a designated code owner. */
     requireCodeOwnerReview: Scalars['Boolean']
+    /** When Copilot opens a pull request without a human collaborator, require one more approving review if a non-zero approval count is required. */
+    requireExtraApprovalForUnattributedChanges: Scalars['Boolean']
     /** Whether the most recent reviewable push must be approved by someone other than the person who pushed it. */
     requireLastPushApproval: Scalars['Boolean']
     /** The number of approving reviews that are required before a pull request can be merged. */
@@ -47952,6 +47954,8 @@ export interface PullRequestParametersGenqlSelection{
     dismissalRestriction?: DismissalRestrictionGenqlSelection
     /** Require an approving review in pull requests that modify files that have a designated code owner. */
     requireCodeOwnerReview?: boolean | number
+    /** When Copilot opens a pull request without a human collaborator, require one more approving review if a non-zero approval count is required. */
+    requireExtraApprovalForUnattributedChanges?: boolean | number
     /** Whether the most recent reviewable push must be approved by someone other than the person who pushed it. */
     requireLastPushApproval?: boolean | number
     /** The number of approving reviews that are required before a pull request can be merged. */
@@ -47975,6 +47979,8 @@ dismissStaleReviewsOnPush: Scalars['Boolean'],
 dismissalRestriction?: (DismissalRestrictionInput | null),
 /** Require an approving review in pull requests that modify files that have a designated code owner. */
 requireCodeOwnerReview: Scalars['Boolean'],
+/** When Copilot opens a pull request without a human collaborator, require one more approving review if a non-zero approval count is required. */
+requireExtraApprovalForUnattributedChanges?: (Scalars['Boolean'] | null),
 /** Whether the most recent reviewable push must be approved by someone other than the person who pushed it. */
 requireLastPushApproval: Scalars['Boolean'],
 /** The number of approving reviews that are required before a pull request can be merged. */
