@@ -30226,6 +30226,9 @@ export default {
             "requireCodeOwnerReview": [
                 114
             ],
+            "requireExtraApprovalForUnattributedChanges": [
+                114
+            ],
             "requireLastPushApproval": [
                 114
             ],
@@ -30253,6 +30256,9 @@ export default {
                 484
             ],
             "requireCodeOwnerReview": [
+                114
+            ],
+            "requireExtraApprovalForUnattributedChanges": [
                 114
             ],
             "requireLastPushApproval": [
