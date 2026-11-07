@@ -38,15 +38,15 @@
     "@genql/cli": "6.3.4",
     "@octokit/types": "18.0.0",
     "@tsconfig/node24": "24.0.5",
-    "@types/node": "26.6.5",
+    "@types/node": "26.6.6",
     "dotenv": "18.0.9",
     "prettier": "3.9.10",
-    "tsc-alias": "1.9.9",
-    "tsdown": "0.23.3",
+    "tsc-alias": "1.9.10",
+    "tsdown": "0.23.5",
     "tsx": "4.23.15",
     "typescript": "7.0.2",
     "undici": "8.12.3",
-    "vitest": "5.0.5"
+    "vitest": "5.1.0"
   },
   "overrides": {
     "@genql/cli": {
